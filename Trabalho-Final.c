@@ -97,7 +97,7 @@ main ()
 	    fflush(stdin);
 		gets(nomeTemp);
 		pos=0;
-		while(stricmp(nomeTemp,VnomeInst[pos]) !=0&&pos<TLI)
+		while(pos<TLI && stricmp(nomeTemp,VnomeInst[pos]) !=0)
 		pos++;
 		if(pos<TLI)
 		    {
@@ -115,9 +115,9 @@ main ()
 	         {
              printf("\b");
              }
-	         scanf("%4d", &temp);
+	         scanf("%d", &temp);
 	         pos=0;
-	         while(temp==VcodInst[pos] &&pos<TLI)
+	         while(pos < TLI && temp != VcodInst[pos])
 	         pos++;
 	         if(pos<TLI)
 	         {
