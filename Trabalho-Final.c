@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <locale.h>
 #include <string.h>
-#include <windows.h>
-#include <conio.h>
 #define TF 10
 #define TF_INST 5
 
@@ -13,14 +11,15 @@ main ()
 	// <---------------------- SISTEMA DE GERENCIAMENTO ACADEMIA ------------------------>
 	
 	// Vetores Inteiros:                             Vetores String:
-	int VcodInst[TF_INST],vcpfInst[TF_INST];  char VnomeInst[TF_INST][81],nomeTemp[81];
-	int VcodAluno[TF],VcpfAluno[TF];          char VnomeAluno[TF][81];
+	int VcodInst[TF_INST],vcpfInst[TF_INST];  char VnomeInst[TF_INST][61],nomeTemp[61]; 
+	int VcodAluno[TF],VcpfAluno[TF];          char VnomeAluno[TF][61];
+	                                          char Vef[1];
 	// Opção Escolhida/Sub Menu e Variável temporária:
 	int op=0,sub_op=0,temp=0;
 	// Vetores Float:
 	float vValorAula=0,vValor=0;
 	// Contadores:
-	int n,cont,i=0,TLI=0,pos; // OBS: "pos" == posição do vetor. 
+	int n,i=0,cont_inst=0,cont_alunos=0,TLI=0,TL=0,pos; // OBS: "pos" == posição do vetor. 
 	
 	// <--------------------------------------------------------------------------------->
 	
@@ -64,7 +63,7 @@ main ()
     
     while(op>=1 && op<=4) //Repetição de Menu (While-01)
     {
-       switch(op) // Controle de Opções com Switch!
+       switch(op) // <-- MENU PRINCIPAL - Controle de Opções com (Switch-01)!
        {
         case 1:                                          
     	printf("\t\t|\t\t\t\t %-53s |\n","MÓDULO DE CADASTROS");                                                
@@ -80,16 +79,16 @@ main ()
 	    printf("%s%s%s",linha02,linha02,linha02);
 	    scanf("%d", &sub_op);
 	    
-	    switch(sub_op)
+	    switch(sub_op) // <-- SUB MENU (Switch-02)!
 	    {
 	    case 1:
 	    printf("\t\t%s%s\n",linha01,linha01);	
 	    printf("\t\t|\t\t\t\t%-53s  |\n","CADASTRO DE INSTRUTORES");
 	    printf("\t\t%s%s\n",linha01,linha01);
 	    printf("\t\t|%86s|\n", " ");
-	    printf("\t\t| %-85s|\n", "[REGRA] Nome completo deve conter no máximo 80 caracteres.");
-	    printf("\t\t| %-84s |\n","Digite o nome completo do instrutor:");
-	    printf("\t\t| [                                                                                  ] |");
+	    printf("\t\t| %-85s|\n", "[REGRA] Nome completo deve conter no máximo 60 caracteres.");
+	    printf("\t\t| %-84s |\n","Digite o nome completo do Instrutor:");
+	    printf("\t\t| [                                                            ]                       |");
 	      for(i = 0; i < 85; i++)
 	    {
         printf("\b");
@@ -108,6 +107,7 @@ main ()
 		else // Inserir os dados do instrutor nos vetores:
 			{
 			 strcpy(VnomeInst[TLI],nomeTemp);
+			 
 	         printf("\t\t%s%s\n",linha01,linha01);
 	         printf("\t\t| %-85s|\n", "[REGRA] Matrícula deve conter exatamente 4 dígitos.");
 	         printf("\t\t| %-84s |","Digite a Matrícula do Instrutor: [    ]");
@@ -128,15 +128,98 @@ main ()
 	         else
 			 {
 			 VcodInst[TLI] = temp;
-			 temp = 0;	
-	         TLI++;
+			 temp = 0;
+			 cont_inst++; // <-- Se precisar, esse é o contador de cadastros de instrutores.
+	         TLI++;       // <-- Implementa TLI para próxima posição do vetor!!
 	         printf("\t\t%s%s\n",linha01,linha01);
+	         
+	         	printf("\t\t| %-67s REGISTRO: [%4.4d] |","CADASTRO CONCLUíDO COM SUCESSO!",TLI); //<-- Utilizado TLI invés de cont_inst.
+	         	printf("\n\t\t|%86s|", " ");
+	         	printf("\n\t\t| %-s","Nome do Instrutor: ");
+	         	
+	         	// Exibição com caixa fixa:
+	            // printf("[%-64.64s]",VnomeInst[TLI-1]);   // <-- [Negativo = esquerda(largura total . imprimir no máximo 64 chars)S = String]
+	            
+	            printf("[%s]%*s|",VnomeInst[TLI-1],64-strlen(VnomeInst[TLI-1]), " ");     // 64 == Quantidade de Espaços - Qt. de Chars
+	            printf("\n");
+	            printf("\t\t| %-10s [%4.4d] %67s|\n","Matrícula:",VcodInst[TLI-1], " ");  // <-- Isso é perfeição! 
+	            printf("\t\t%s%s\n",linha01,linha01);
 	         }
 	        }
 	     break;
 	    		
 	    case 2:
-        	
+	    printf("\t\t%s%s\n",linha01,linha01);	
+	    printf("\t\t|\t\t\t\t%-53s  |\n","CADASTRO DE ALUNOS");
+	    printf("\t\t%s%s\n",linha01,linha01);
+	    printf("\t\t|%86s|\n", " ");
+	    printf("\t\t| %-85s|\n", "[REGRA] Nome completo deve conter no máximo 60 caracteres.");
+	    printf("\t\t| %-84s |\n","Digite o nome completo do Aluno:");
+	    printf("\t\t| [                                                            ]                       |");
+	      for(i = 0; i < 85; i++)
+	    {
+        printf("\b");
+        }
+	    fflush(stdin);
+		gets(nomeTemp);
+		pos=0;
+		while(pos<TL && stricmp(nomeTemp,VnomeAluno[pos]) !=0)
+		pos++;
+		if(pos<TL)
+		    {
+		    printf("\t\t|%86s|\n", " ");
+			printf("\t\t| %-85s|\n", "[!] Aluno já cadastrado tente novamente.");
+			printf("\t\t%s%s\n",linha01,linha01);	
+	     	}
+		else // Inserir os dados do aluno nos vetores:
+			{
+			 strcpy(VnomeAluno[TL],nomeTemp);
+			 
+	         printf("\t\t%s%s\n",linha01,linha01);
+	         printf("\t\t| %-85s|\n", "[REGRA] Matrícula deve conter exatamente 4 dígitos.");
+	         printf("\t\t| %-84s |","Digite a Matrícula do Aluno: [    ]");
+	         for(i = 0; i < 56; i++)
+	         {
+             printf("\b");
+             }
+	         scanf("%d", &temp);
+	         pos=0;
+	         while(pos < TL && temp != VcodAluno[pos])
+	         pos++;
+	         if(pos<TL)
+	         {
+	         printf("\t\t|%86s|\n", " ");
+			 printf("\t\t| %-85s|\n", "[!] Matrícula já utilizada tente novamente.");
+		     printf("\t\t%s%s\n",linha01,linha01);	
+	         }
+	         else
+			 {
+			 VcodAluno[TL] = temp;
+			 temp = 0;
+			 cont_alunos++; // <-- Se precisar, esse é o contador de cadastros de alunos.
+	         TL++;       // <-- Implementa TL para próxima posição do vetor!!
+	         printf("\t\t%s%s\n",linha01,linha01);
+	         
+	         	printf("\t\t| %-67s REGISTRO: [%4.4d] |","CADASTRO CONCLUíDO COM SUCESSO!",TL); //<-- Utilizado TL invés de cont_alunos.
+	         	printf("\n\t\t|%86s|", " ");
+	         	printf("\n\t\t| %-s","Nome do Aluno: ");
+	         	
+	         	// Exibição com caixa fixa:
+	            // printf("[%-68.68s]",VnomeAluno[TLI-1]);   // <-- [Negativo = esquerda(largura total . imprimir no máximo 68 chars)S = String]
+	            
+	            printf("[%s]%*s|",VnomeAluno[TL-1],68-strlen(VnomeAluno[TL-1]), " ");     // 68 == Quantidade de Espaços - Qt. de Chars
+	            printf("\n");
+	            printf("\t\t| %-10s [%4.4d] %67s|\n","Matrícula:",VcodAluno[TL-1], " ");  // <-- Isso é perfeição! 
+	            printf("\t\t%s%s\n",linha01,linha01);
+	            
+	            printf("\t\t| %-85s|\n", "[REGRA] Matrícula deve conter exatamente 4 dígitos.");
+	            printf("\t\t| %-85|\n","Deseja continuar?");
+	            
+	            gets()
+	            
+	
+	         }
+	        }
          break;
 
         case 3:
