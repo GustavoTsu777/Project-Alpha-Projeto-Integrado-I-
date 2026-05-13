@@ -5,7 +5,7 @@
 #define TF_INST 5
 
 
-main ()
+ int main ()
 {
 
 	// <---------------------- SISTEMA DE GERENCIAMENTO ACADEMIA ------------------------>
@@ -215,7 +215,7 @@ main ()
 	            printf("\t\t| %-85s|\n", "[REGRA] Matrícula deve conter exatamente 4 dígitos.");
 	            printf("\t\t| %-85|\n","Deseja continuar?");
 	            
-	            gets()
+	            
 	            
 	
 	         }
