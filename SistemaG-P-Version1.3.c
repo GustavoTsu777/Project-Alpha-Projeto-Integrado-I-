@@ -20,10 +20,12 @@ main ()
 	
 	// Opção Escolhida/Sub Menu e Variável temporária:
 	int op=0,sub_op=0,temp=0,Rep_loop=0;
+	
 	// Vetores Float:
 	float vValorAula=0,vValor=0;
+	
 	// Contadores:
-	int n,i=0,cont_inst=0,cont_alunos=0,TLI=0,TL=0,pos; // OBS: "pos" == posição do vetor. 
+	int n,i=0,cont_inst=0,cont_alunos=0,TLI=0,TL=0,pos,limite=0; // OBS: "pos" == posição do vetor. 
 	
 	// <--------------------------------------------------------------------------------->
 	
@@ -162,6 +164,7 @@ main ()
 	    // <----------------------------------- CADASTRO DE ALUNOS [AQUI] ------------------------------------------->
 	    
 	    // Zerando contadores:
+	    limite=0; 
 	    Rep_loop=0;
 	    cont_alunos=0;
 	    
@@ -178,11 +181,12 @@ main ()
         
         // <------------------------------------- IF DE VERIFICAÇÃO: ---------------------------------------->
         
-        // Verifica se excedeu limite:
-        if(Rep_loop>100)
+        // Verifica se excedeu limite (1 Tentativa):
+        if(Rep_loop>TF)
         {
         	printf("\t\t%s%s%s\n",linha01,linha01);
         	printf("\t\t| %-85s|\n","[!] Limite excedido, tente novamente.");
+        	printf("\t\t| %-85s|\n","[!] 1 tentativa restante.");
         	printf("\t\t%s%s%s\n",linha01,linha01);
 	        printf("\t\t| %-85s|\n", "[REGRA] Limite de 100 Cadastros.");
             printf("\t\t| %-85s|","Digite o número de alunos que você deseja cadastrar: [   ]");
@@ -193,13 +197,19 @@ main ()
          }
         
         scanf("%d", &Rep_loop);
-        }
         
+         if(Rep_loop>TF)
+         {
+         limite++; // Serve para parar o while de cadastro.
+         printf("\t\t%s%s\n",linha01,linha01);
+         }
+         
+        }
         strcpy(Vef,yes); // Pra não bugar while! Vef = SIM (entra no while).
         
         // <-------------------------------- WHILE COM REPETIÇÃO DE CADASTRO: ------------------------------------------->
         
-	   	while(cont_alunos<Rep_loop && stricmp(Vef,no) !=0)
+	   	while(TL<TF && limite==0 && cont_alunos<Rep_loop && stricmp(Vef,no) !=0)
 	    {
 	         printf("\t\t%s%s\n",linha01,linha01);	
 	         printf("\t\t|\t\t\t\t%-53s  |\n","CADASTRO DE ALUNOS");
@@ -341,7 +351,8 @@ main ()
         break;
 
         case 3:
-        /* RASCUNHO:
+        // <----------------------------------- CADASTRO DE MODALIDADE [COMEÇO AQUI] ------------------------------------------->
+        /* RASCUNHO APAGAR DEPOIS:
 			printf("\t\t%s%s",linha01,linha01);
         	printf("\t\t| %-85s|","CADASTRO DE MODALIDADE");
         
