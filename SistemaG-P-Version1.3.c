@@ -11,98 +11,105 @@ main ()
 	// <---------------------- SISTEMA DE GERENCIAMENTO ACADEMIA ------------------------>
 	
 	// Vetores Inteiros:                             Vetores String:
-	int VcodInst[TF_INST],vcpfInst[TF_INST];  char VnomeInst[TF_INST][61],nomeTemp[61]; 
+	int VcodInst[TF_INST],vcpfInst[TF_INST];  char VnomeInst[TF_INST][61],nomeTemp[61],vModalidade[61]; 
 	int VcodAluno[TF],VcpfAluno[TF];          char VnomeAluno[TF][61];
-	// Parte3                                 // Extras:
-	int VcodMod,vMOdalidade;                  char Vef[1], yes[]="s",no[]="n";
-	// OpÁ„o Escolhida/Sub Menu e Vari·vel tempor·ria:
+	// Parte 3 - Modalidade:                  // Extras:
+	int VcodMod;                              char Vef[2], yes[]="s",no[]="n"; // Usado no loop verificador n√£o est√° funcionando (Atualizar);
+	
+	
+	
+	// Op√ß√£o Escolhida/Sub Menu e Vari√°vel tempor√°ria:
 	int op=0,sub_op=0,temp=0,Rep_loop=0;
 	// Vetores Float:
 	float vValorAula=0,vValor=0;
 	// Contadores:
-	int n,i=0,cont_inst=0,cont_alunos=0,TLI=0,TL=0,pos; // OBS: "pos" == posiÁ„o do vetor. 
+	int n,i=0,cont_inst=0,cont_alunos=0,TLI=0,TL=0,pos; // OBS: "pos" == posi√ß√£o do vetor. 
 	
 	// <--------------------------------------------------------------------------------->
 	
-	// SeparaÁ„o de linhas:
+	// Separa√ß√£o de linhas:
 	char linha01[] = "============================================";
-	char linha02[] = "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b"; // <-- Atualizado para vers„o em for!
+	char linha02[] = "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b"; // <-- Atualizado para vers√£o em for!
 	
-	setlocale(LC_ALL,"Portuguese"); // <-- Define a linguagem local em PortuguÍs.
-	printf("\t\t%s%s\n" ,linha01,linha01);                                      // \n quebra linha, \t adiciona tabulaÁ„o.
+	setlocale(LC_ALL,"Portuguese"); // <-- Define a linguagem local em Portugu√™s.
+	printf("\t\t%s%s\n" ,linha01,linha01);                                      // \n quebra linha, \t adiciona tabula√ß√£o.
 	printf("\t\t|%86s|\n", " ");                                            
 	printf("\t\t|\t\t\t %-61s |\n","SISTEMA DE GERENCIAMENTO PROJECT ALPHA");   // Utilizado "largura de campo" (field width)
 	printf("\t\t|%86s|\n", " ");                                                // Exemplo: %-40s
-	printf("\t\t%s%s\n" ,linha01,linha01);                                      // %  -> inicia a formataÁ„o
-	printf("\t\t|%86s|\n", " ");                                                // -  -> alinhamento ‡ esquerda
-	printf("\t\t| %-84s |\n","[1] - Gest„o de Cadastros");                      // 40 -> define a largura do campo em 40 caracteres
-	printf("\t\t| %-84s |\n","[2] - Gest„o de Exclusıes");                      // s  -> indica uma string
-	printf("\t\t| %-84s |\n","[3] - LanÁamentos");                              // Usado para alinhar e organizar textos/interface no console.
-	printf("\t\t| %-84s |\n","[4] - Emiss„o de RelatÛrio");
+	printf("\t\t%s%s\n" ,linha01,linha01);                                      // %  -> inicia a formata√ß√£o
+	printf("\t\t|%86s|\n", " ");                                                // -  -> alinhamento √† esquerda
+	printf("\t\t| %-84s |\n","[1] - Gest√£o de Cadastros");                      // 40 -> define a largura do campo em 40 caracteres
+	printf("\t\t| %-84s |\n","[2] - Gest√£o de Exclus√µes");                      // s  -> indica uma string
+	printf("\t\t| %-84s |\n","[3] - Lan√ßamentos");                              // Usado para alinhar e organizar textos/interface no console.
+	printf("\t\t| %-84s |\n","[4] - Emiss√£o de Relat√≥rio");
 	printf("\t\t| %-84s |\n","[5] - Finalizar");
 	printf("\t\t|%86s|\n", " ");
 	printf("\t\t%s%s\n" ,linha01,linha01);  
-	printf("\t\t| %-85s|", "Digite a opÁ„o desejada: [ ]");
+	printf("\t\t| %-85s|", "Digite a op√ß√£o desejada: [ ]");
     printf("%s%s%s",linha02,linha02,linha02);                                   // Utilizado: \b < -- Volta o cursor em 1 caractere.
-    scanf("%1d", &temp);                                                        // Aceita somente 1 dÌgito de n˙mero inteiro. ( %1d ) 
+    scanf("%1d", &temp);                                                        // Aceita somente 1 d√≠gito de n√∫mero inteiro. ( %1d ) 
     
-    if(temp>0 && temp<=5) // <-- (IF-01) ValidaÁ„o de "temp".
+    if(temp>0 && temp<=5) // <-- (IF-01) Valida√ß√£o de "temp".
     { op = temp;
       temp = 0;
     }                     // fechamento (IF-01)
     else
     {
     printf("\t\t|%86s|\n", " ");     
-    printf("\t\t| %-85s|\n", "[!] OpÁ„o inv·lida!! ");
-    printf("\t\t| %-85s|\n", "[!] Caso uma opÁ„o inv·lida seja informada novamente, o sistema ser· encerrado.");
+    printf("\t\t| %-85s|\n", "[!] Op√ß√£o inv√°lida!! ");
+    printf("\t\t| %-85s|\n", "[!] Caso uma op√ß√£o inv√°lida seja informada novamente, o sistema ser√° encerrado.");
     printf("\t\t|%86s|\n", " ");     
-    printf("\t\t| %-85s|", "Digite a opÁ„o desejada: [ ]");
+    printf("\t\t| %-85s|", "Digite a op√ß√£o desejada: [ ]");
     printf("%s%s%s",linha02,linha02,linha02);                               
     scanf("%1d", &op);               
     }
     printf("\t\t%s%s\n" ,linha01,linha01); 
     
-    while(op>=1 && op<=4) //RepetiÁ„o de Menu (While-01)
+    while(op>=1 && op<=4) //Repeti√ß√£o de Menu (While-01)
     {
-       switch(op) // <-- MENU PRINCIPAL - Controle de OpÁıes com (Switch-01)!
+       switch(op) // <-- MENU PRINCIPAL - Controle de Op√ß√µes com (Switch-01)!
        {
         case 1:                                          
-    	printf("\t\t|\t\t\t\t %-53s |\n","M”DULO DE CADASTROS");                                                
+    	printf("\t\t|\t\t\t\t %-53s |\n","M√ìDULO DE CADASTROS");                                                
     	printf("\t\t%s%s\n" ,linha01,linha01);  
-    	printf("\t\t| %-84s |\n","Selecione uma das operaÁıes disponÌveis:");
+    	printf("\t\t| %-84s |\n","Selecione uma das opera√ß√µes dispon√≠veis:");
     	printf("\t\t|%86s|\n", " ");
     	printf("\t\t| %-84s |\n","[1] Cadastro de Instrutores");                 
 	    printf("\t\t| %-84s |\n","[2] Cadastro de Alunos");                  
 	    printf("\t\t| %-84s |\n","[3] Cadastro de Modalidades");                         
 	    printf("\t\t| %-84s |\n","[4] Retornar ao Menu Principal");
 	    printf("\t\t|%86s|\n", " ");
-	    printf("\t\t| %-85s|","Digite a opÁ„o desejada: [ ]");
+	    printf("\t\t| %-85s|","Digite a op√ß√£o desejada: [ ]");
 	    printf("%s%s%s",linha02,linha02,linha02);
 	    scanf("%d", &sub_op);
 	    
+	    while(sub_op>=1 && sub_op<=3) //Repeti√ß√£o de Menu (While-01)
+	    {
+	    
 	    switch(sub_op) // <-- SUB MENU (Switch-02)!
 	    {
-	    case 1:
-	    printf("\t\t%s%s\n",linha01,linha01);	
-	    printf("\t\t|\t\t\t\t%-53s  |\n","CADASTRO DE INSTRUTORES");
-	    printf("\t\t%s%s\n",linha01,linha01);
-	    printf("\t\t|%86s|\n", " ");
-	    printf("\t\t| %-85s|\n", "[REGRA] Nome completo deve conter no m·ximo 60 caracteres.");
-	    printf("\t\t| %-84s |\n","Digite o nome completo do Instrutor:");
-	    printf("\t\t| [                                                            ]                       |");
+	      case 1:
+	     // <----------------------------------- CADASTRO DE INSTRUTORES [COME√áO AQUI] ------------------------------------------->
+	      printf("\t\t%s%s\n",linha01,linha01);	
+	      printf("\t\t|\t\t\t\t%-53s  |\n","CADASTRO DE INSTRUTORES");
+	      printf("\t\t%s%s\n",linha01,linha01);
+	      printf("\t\t|%86s|\n", " ");
+	      printf("\t\t| %-85s|\n", "[REGRA] Nome completo deve conter no m√°ximo 60 caracteres.");
+	      printf("\t\t| %-84s |\n","Digite o nome completo do Instrutor:");
+	      printf("\t\t| [                                                            ]                       |");
 	      for(i = 0; i < 85; i++)
-	    {
-        printf("\b");
-        }
-	    fflush(stdin);
-		gets(nomeTemp);
+	      {
+          printf("\b");
+          }
+	      fflush(stdin);
+		  gets(nomeTemp);
 		pos=0;
 		while(pos<TLI && stricmp(nomeTemp,VnomeInst[pos]) !=0)
 		pos++;
 		if(pos<TLI)
 		    {
 		    printf("\t\t|%86s|\n", " ");
-			printf("\t\t| %-85s|\n", "[!] Instrutor j· cadastrado tente novamente.");
+			printf("\t\t| %-85s|\n", "[!] Instrutor j√° cadastrado tente novamente.");
 			printf("\t\t%s%s\n",linha01,linha01);	
 	     	}
 		else // Inserir os dados do instrutor nos vetores:
@@ -110,8 +117,8 @@ main ()
 			 strcpy(VnomeInst[TLI],nomeTemp);
 			 
 	         printf("\t\t%s%s\n",linha01,linha01);
-	         printf("\t\t| %-85s|\n", "[REGRA] MatrÌcula deve conter exatamente 4 dÌgitos.");
-	         printf("\t\t| %-84s |","Digite a MatrÌcula do Instrutor: [    ]");
+	         printf("\t\t| %-85s|\n", "[REGRA] Matr√≠cula deve conter exatamente 4 d√≠gitos.");
+	         printf("\t\t| %-84s |","Digite a Matr√≠cula do Instrutor: [    ]");
 	         for(i = 0; i < 52; i++)
 	         {
              printf("\b");
@@ -123,52 +130,62 @@ main ()
 	         if(pos<TLI)
 	         {
 	         printf("\t\t|%86s|\n", " ");
-			 printf("\t\t| %-85s|\n", "[!] MatrÌcula j· utilizada tente novamente.");
+			 printf("\t\t| %-85s|\n", "[!] Matr√≠cula j√° utilizada tente novamente.");
 		     printf("\t\t%s%s\n",linha01,linha01);	
 	         }
 	         else
 			 {
 			 VcodInst[TLI] = temp;
 			 temp = 0;
-			 cont_inst++; // <-- Se precisar, esse È o contador de cadastros de instrutores.
-	         TLI++;       // <-- Implementa TLI para prÛxima posiÁ„o do vetor!!
+			 cont_inst++; // <-- Se precisar, esse √© o contador de cadastros de instrutores.
+	         TLI++;       // <-- Implementa TLI para pr√≥xima posi√ß√£o do vetor!!
 	         printf("\t\t%s%s\n",linha01,linha01);
 	         
-	         	printf("\t\t| %-67s REGISTRO: [%4.4d] |","CADASTRO CONCLUÌDO COM SUCESSO!",TLI); //<-- Utilizado TLI invÈs de cont_inst.
+	         	printf("\t\t| %-67s REGISTRO: [%4.4d] |","CADASTRO CONCLU√≠DO COM SUCESSO!",TLI); //<-- Utilizado TLI inv√©s de cont_inst.
 	         	printf("\n\t\t|%86s|", " ");
 	         	printf("\n\t\t| %-s","Nome do Instrutor: ");
 	         	
-	         	// ExibiÁ„o com caixa fixa:
-	            // printf("[%-64.64s]",VnomeInst[TLI-1]);   // <-- [Negativo = esquerda(largura total . imprimir no m·ximo 64 chars)S = String]
+	         	// Exibi√ß√£o com caixa fixa:
+	            // printf("[%-64.64s]",VnomeInst[TLI-1]);   // <-- [Negativo = esquerda(largura total . imprimir no m√°ximo 64 chars)S = String]
 	            
-	            printf("[%s]%*s|",VnomeInst[TLI-1],64-strlen(VnomeInst[TLI-1]), " ");     // 64 == Quantidade de EspaÁos - Qt. de Chars
+	            printf("[%s]%*s|",VnomeInst[TLI-1],64-strlen(VnomeInst[TLI-1]), " ");     // 64 == Quantidade de Espa√ßos - Qt. de Chars
 	            printf("\n");
-	            printf("\t\t| %-10s [%4.4d] %67s|\n","MatrÌcula:",VcodInst[TLI-1], " ");  // <-- Isso È perfeiÁ„o! 
+	            printf("\t\t| %-10s [%4.4d] %67s|\n","Matr√≠cula:",VcodInst[TLI-1], " ");  // <-- Isso √© perfei√ß√£o! 
 	            printf("\t\t%s%s\n",linha01,linha01);
 	         }
 	        }
+	     // <----------------------------------- CADASTRO DE INSTRUTORES [FIM AQUI] ------------------------------------------->
 	     break;
-	    		
+
+		
 	    case 2:
+	    // <----------------------------------- CADASTRO DE ALUNOS [AQUI] ------------------------------------------->
+	    
+	    // Zerando contadores:
 	    Rep_loop=0;
+	    cont_alunos=0;
+	    
 	    printf("\t\t%s%s%s\n",linha01,linha01);
 	    printf("\t\t| %-85s|\n", "[REGRA] Limite de 100 Cadastros.");
-        printf("\t\t| %-85s|","Digite o n˙mero de alunos que vocÍ deseja cadastrar: [   ]");
+        printf("\t\t| %-85s|","Digite o n√∫mero de alunos que voc√™ deseja cadastrar: [   ]");
         
         for(i = 0; i<32; i++)
         {
         printf("\b");
         }
         
-        scanf("%d", &Rep_loop);
+        scanf("%d", &Rep_loop); // RECEBE QUANTAS VEZES IR√Å REPETIR O CADASTRO!
         
-        while(Rep_loop>100)
+        // <------------------------------------- IF DE VERIFICA√á√ÉO: ---------------------------------------->
+        
+        // Verifica se excedeu limite:
+        if(Rep_loop>100)
         {
         	printf("\t\t%s%s%s\n",linha01,linha01);
         	printf("\t\t| %-85s|\n","[!] Limite excedido, tente novamente.");
         	printf("\t\t%s%s%s\n",linha01,linha01);
 	        printf("\t\t| %-85s|\n", "[REGRA] Limite de 100 Cadastros.");
-            printf("\t\t| %-85s|","Digite o n˙mero de alunos que vocÍ deseja cadastrar: [   ]");
+            printf("\t\t| %-85s|","Digite o n√∫mero de alunos que voc√™ deseja cadastrar: [   ]");
         
          for(i = 0; i<32; i++)
          {
@@ -178,13 +195,17 @@ main ()
         scanf("%d", &Rep_loop);
         }
         
-	   	while(Rep_loop<TF || stricmp(Vef,no) !=0)
+        strcpy(Vef,yes); // Pra n√£o bugar while! Vef = SIM (entra no while).
+        
+        // <-------------------------------- WHILE COM REPETI√á√ÉO DE CADASTRO: ------------------------------------------->
+        
+	   	while(cont_alunos<Rep_loop && stricmp(Vef,no) !=0)
 	    {
 	         printf("\t\t%s%s\n",linha01,linha01);	
 	         printf("\t\t|\t\t\t\t%-53s  |\n","CADASTRO DE ALUNOS");
 	         printf("\t\t%s%s\n",linha01,linha01);
 	         printf("\t\t|%86s|\n", " ");
-	         printf("\t\t| %-85s|\n", "[REGRA] Nome completo deve conter no m·ximo 60 caracteres.");
+	         printf("\t\t| %-85s|\n", "[REGRA] Nome completo deve conter no m√°ximo 60 caracteres.");
 	         printf("\t\t| %-84s |\n","Digite o nome completo do Aluno:");
 	         printf("\t\t| [                                                            ]                       |");
 	    for(i = 0; i < 85; i++)
@@ -199,7 +220,7 @@ main ()
 		if(pos<TL)
 		    {
 		    printf("\t\t|%86s|\n", " ");
-			printf("\t\t| %-85s|\n", "[!] Aluno j· cadastrado tente novamente.");
+			printf("\t\t| %-85s|\n", "[!] Aluno j√° cadastrado tente novamente.");
 			printf("\t\t%s%s\n",linha01,linha01);	
 	     	}
 		else // Inserir os dados do aluno nos vetores:
@@ -207,8 +228,8 @@ main ()
 			 strcpy(VnomeAluno[TL],nomeTemp);
 			 
 	         printf("\t\t%s%s\n",linha01,linha01);
-	         printf("\t\t| %-85s|\n", "[REGRA] MatrÌcula deve conter exatamente 4 dÌgitos.");
-	         printf("\t\t| %-84s |","Digite a MatrÌcula do Aluno: [    ]");
+	         printf("\t\t| %-85s|\n", "[REGRA] Matr√≠cula deve conter exatamente 4 d√≠gitos.");
+	         printf("\t\t| %-84s |","Digite a Matr√≠cula do Aluno: [    ]");
 	         for(i = 0; i < 56; i++)
 	         {
              printf("\b");
@@ -220,30 +241,30 @@ main ()
 	         if(pos<TL)
 	         {
 	         printf("\t\t|%86s|\n", " ");
-			 printf("\t\t| %-85s|\n", "[!] MatrÌcula j· utilizada tente novamente.");
+			 printf("\t\t| %-85s|\n", "[!] Matr√≠cula j√° utilizada tente novamente.");
 		     printf("\t\t%s%s\n",linha01,linha01);	
 	         }
 	         else
 			 {
 			 VcodAluno[TL] = temp;
 			 temp = 0;
-			 cont_alunos++; // <-- Se precisar, esse È o contador de cadastros de alunos.
-	         TL++;       // <-- Implementa TL para prÛxima posiÁ„o do vetor!!
+			 cont_alunos++; // <-- Se precisar, esse √© o contador de cadastros de alunos.
+	         TL++;       // <-- Implementa TL para pr√≥xima posi√ß√£o do vetor!!
 	         printf("\t\t%s%s\n",linha01,linha01);
 	         
-	         	printf("\t\t| %-67s REGISTRO: [%4.4d] |","CADASTRO CONCLUÌDO COM SUCESSO!",TL); //<-- Utilizado TL invÈs de cont_alunos.
+	         	printf("\t\t| %-67s REGISTRO: [%4.4d] |","CADASTRO CONCLU√≠DO COM SUCESSO!",TL); //<-- Utilizado TL inv√©s de cont_alunos.
 	         	printf("\n\t\t|%86s|", " ");
 	         	printf("\n\t\t| %-s","Nome do Aluno: ");
 	         	
-	         	// ExibiÁ„o com caixa fixa:
-	            // printf("[%-68.68s]",VnomeAluno[TLI-1]);   // <-- [Negativo = esquerda(largura total . imprimir no m·ximo 68 chars)S = String]
+	         	// Exibi√ß√£o com caixa fixa:
+	            // printf("[%-68.68s]",VnomeAluno[TLI-1]);   // <-- [Negativo = esquerda(largura total . imprimir no m√°ximo 68 chars)S = String]
 	            
-	            printf("[%s]%*s|",VnomeAluno[TL-1],68-strlen(VnomeAluno[TL-1]), " ");     // 68 == Quantidade de EspaÁos - Qt. de Chars
+	            printf("[%s]%*s|",VnomeAluno[TL-1],68-strlen(VnomeAluno[TL-1]), " ");     // 68 == Quantidade de Espa√ßos - Qt. de Chars
 	            printf("\n");
-	            printf("\t\t| %-10s [%4.4d] %67s|\n","MatrÌcula:",VcodAluno[TL-1], " ");  // <-- Isso È perfeiÁ„o! 
+	            printf("\t\t| %-10s [%4.4d] %67s|\n","Matr√≠cula:",VcodAluno[TL-1], " ");  // <-- Isso √© perfei√ß√£o! 
 	            printf("\t\t%s%s\n",linha01,linha01);
 	            
-	            if(cont_alunos==Rep_loop)
+	                if(cont_alunos==Rep_loop)
 	                {
 	                 printf("\t\t| %-85s|\n", "[REGRA] Digite [s] para continuar ou [n] para encerrar.");
 	                 printf("\t\t| %-85s|","Deseja continuar? [ ]");
@@ -253,44 +274,77 @@ main ()
 	                 }	 
 	            
 				      fflush(stdin);
-	                gets(Vef);
+	                  gets(Vef);
 	                if(stricmp(Vef,no) ==0)
 	                {
 	                Rep_loop=0;
 	                }
-	            if(stricmp(Vef,yes) !=0 && stricmp(Vef,no) !=0)
-	            {
-	              
-                    printf("\t\t| %-85s|\n", "[!] OpÁ„o inv·lida!! ");
-                    printf("\t\t| %-85s|\n", "[!] Caso uma opÁ„o inv·lida seja informada novamente, o sistema ser· encerrado.");
-                    printf("\t\t|%86s|\n", " ");     
-                    
-                    printf("\t\t%s%s\n",linha01,linha01);
-	            
-	                printf("\t\t| %-85s|\n", "[REGRA] Digite [s] para continuar ou [n] para encerrar.");
-	                printf("\t\t| %-85s|","Deseja continuar? [ ]");
-	                for(i = 0;i < 67;i++)
+	                else
 	                {
-	                printf("\b");
-	                }	 
+	                	Rep_loop=0;
+	                    printf("\t\t%s%s%s\n",linha01,linha01);
+	                    printf("\t\t| %-85s|\n", "[REGRA] Limite de 100 Cadastros.");
+                        printf("\t\t| %-85s|","Digite o n√∫mero de alunos que voc√™ deseja cadastrar: [   ]");
+        
+                         for(i = 0; i<32; i++)
+                         {
+                          printf("\b");
+                         }
+        
+                        scanf("%d", &Rep_loop);
+        
+                        if(Rep_loop>100)
+                        {
+        	                printf("\t\t%s%s%s\n",linha01,linha01);
+                           	printf("\t\t| %-85s|\n","[!] Limite excedido, tente novamente.");
+              	            printf("\t\t%s%s%s\n",linha01,linha01);
+	                          printf("\t\t| %-85s|\n", "[REGRA] Limite de 100 Cadastros.");
+                              printf("\t\t| %-85s|","Digite o n√∫mero de alunos que voc√™ deseja cadastrar: [   ]");
+        
+                              for(i = 0; i<32; i++)
+                              {
+                                printf("\b");
+                              }
+        
+                              scanf("%d", &Rep_loop);
+                        }
+	                }
+	                if(stricmp(Vef,yes) !=0 && stricmp(Vef,no) !=0)
+	                {
+	              
+                      printf("\t\t| %-85s|\n", "[!] Op√ß√£o inv√°lida!! ");
+                      printf("\t\t| %-85s|\n", "[!] Caso uma op√ß√£o inv√°lida seja informada novamente, o sistema ser√° encerrado.");
+                      printf("\t\t|%86s|\n", " ");     
+                    
+                      printf("\t\t%s%s\n",linha01,linha01);
 	            
-				    fflush(stdin);
-	                gets(Vef);
+	                   printf("\t\t| %-85s|\n", "[REGRA] Digite [s] para continuar ou [n] para encerrar.");
+	                   printf("\t\t| %-85s|","Deseja continuar? [ ]");
+	                   
+					   for(i = 0;i < 67;i++)
+	                   {
+	                    printf("\b");
+	                   }	 
+	            
+				       fflush(stdin);
+	                   gets(Vef);
 	            	
-	            }
+	                }
 	            
-	            printf("\t\t%s%s\n",linha01,linha01);
+	                 printf("\t\t%s%s\n",linha01,linha01);
                     } // <-- If Verificador de cont.
 	         } // <-- Else-01
 	        } // <-- Else-02
 	        
-	    }    // <-- Fechamento do While
-         break;
+	    }   // <-- Fechamento do While 
+	     // <----------------------------------- CADASTRO DE ALUNOS [FIM AQUI] ------------------------------------------->
+        break;
 
         case 3:
-        	printf("\t\t%s%s",linha01,linha01);
+        /* RASCUNHO:
+			printf("\t\t%s%s",linha01,linha01);
         	printf("\t\t| %-85s|","CADASTRO DE MODALIDADE");
-        	printf("\t\t| %-74s [%11.11d]|","Digite o cpf do aluno:",VcpfAluno);
+        
         	for(i = 0; i < 64; i++)
         	{
         	printf("\b");
@@ -299,7 +353,38 @@ main ()
         	
         	//VERIFICADOR AQUI!!!
         	
-        	//REPETE LEITOR + 2 Vef;
+        	TLM <-- NO caso TL de Modalidade;
+        	
+        	//REPETE LEITOR + 2 Vef; */
+        	
+        	printf("\t\t%s%s\n",linha01,linha01);	
+	        printf("\t\t|\t\t\t\t%-53s  |\n","CADASTRO DE MODALIDADE");
+	        printf("\t\t%s%s\n",linha01,linha01);
+
+        	printf("\t\t| %-85s|\n", "[REGRA] O c√≥digo deve conter no m√°ximo 2 d√≠gitos.");
+	        printf("\t\t| %-84s |","Digite o c√≥digo da modalidade: [  ]");
+	           for(i = 0;i < 54;i++)
+	                 {
+	                  printf("\b");
+	                 }	
+	                 scanf("%d", &VcodMod);
+	                 
+	    // <--------------------------------------------------------------------------------------------------->
+	                 
+	                 
+	        printf("\t\t%s%s\n",linha01,linha01);
+	        printf("\t\t|%86s|\n", " ");
+	         printf("\t\t| %-85s|\n", "[REGRA] Modalidade deve conter no m√°ximo 60 caracteres.");
+	         printf("\t\t| %-84s |\n","Digite o nome da Modalidade:");
+	         printf("\t\t| [                                                            ]                       |");
+	           for(i = 0; i < 85; i++)
+	           {
+                printf("\b");
+               }
+	           fflush(stdin);
+		       gets(nomeTemp);
+        	
+        	
         	
          break;
         
@@ -308,7 +393,23 @@ main ()
          break;
 	    
 	    } // fechamento Switch-02
-    	
+	                                           
+		// <----------------------------------- REPETI√á√ÉO SUB MENU [AQUI] ------------------------------------------->  
+		
+    	printf("\t\t|\t\t\t\t %-53s |\n","M√ìDULO DE CADASTROS");                                                
+    	printf("\t\t%s%s\n" ,linha01,linha01);  
+    	printf("\t\t| %-84s |\n","Selecione uma das opera√ß√µes dispon√≠veis:");
+    	printf("\t\t|%86s|\n", " ");
+    	printf("\t\t| %-84s |\n","[1] Cadastro de Instrutores");                 
+	    printf("\t\t| %-84s |\n","[2] Cadastro de Alunos");                  
+	    printf("\t\t| %-84s |\n","[3] Cadastro de Modalidades");                         
+	    printf("\t\t| %-84s |\n","[4] Retornar ao Menu Principal");
+	    printf("\t\t|%86s|\n", " ");
+	    printf("\t\t| %-85s|","Digite a op√ß√£o desejada: [ ]");
+	    printf("%s%s%s",linha02,linha02,linha02);
+	     scanf("%d", &sub_op);
+	    
+        } // fechamento While Repeti√ß√£o Sub Menu <-- Cadastros!
         break;
     		
         case 2:
@@ -341,33 +442,34 @@ main ()
     	
     	
        } // fechamento do Switch-01
-       
-     
+    // <----------------------------------- REPETI√á√ÉO MENU [AQUI] ------------------------------------------->  
+     printf("\t\t|%86s|\n", " "); 
+     printf("\t\t%s%s\n",linha01,linha01);
 	 printf("\t\t|\t\t\t      %-54s   |\n","PROJECT ALPHA - MENU PRINCIPAL");
 	 printf("\t\t%s%s\n",linha01,linha01);                                    
 	 printf("\t\t|%86s|\n", " ");                                                
-	 printf("\t\t| %-84s |\n","[1] - Gest„o de Cadastros");                      
-	 printf("\t\t| %-84s |\n","[2] - Gest„o de Exclusıes");                      
- 	 printf("\t\t| %-84s |\n","[3] - LanÁamentos");                              
-	 printf("\t\t| %-84s |\n","[4] - Emiss„o de RelatÛrio");
+	 printf("\t\t| %-84s |\n","[1] - Gest√£o de Cadastros");                      
+	 printf("\t\t| %-84s |\n","[2] - Gest√£o de Exclus√µes");                      
+ 	 printf("\t\t| %-84s |\n","[3] - Lan√ßamentos");                              
+	 printf("\t\t| %-84s |\n","[4] - Emiss√£o de Relat√≥rio");
 	 printf("\t\t| %-84s |\n","[5] - Finalizar");
 	 printf("\t\t|%86s|\n", " ");
 	 printf("\t\t%s%s\n" ,linha01,linha01);  
-	 printf("\t\t| %-85s|", "Digite a opÁ„o desejada: [ ]");
+	 printf("\t\t| %-85s|", "Digite a op√ß√£o desejada: [ ]");
      printf("%s%s%s",linha02,linha02,linha02);                                   
      scanf("%1d", &temp);                                                        
     
-    if(temp>0 && temp<=5) // <-- (IF-01.1) ValidaÁ„o de "temp".
+    if(temp>0 && temp<=5) // <-- (IF-01.1) Valida√ß√£o de "temp".
     { op = temp;
       temp = 0;
     }                     // fechamento (IF-01.1)
     else
     {
     printf("\t\t|%86s|\n", " ");     
-    printf("\t\t| %-85s|\n", "[!] OpÁ„o inv·lida!! ");
-    printf("\t\t| %-85s|\n", "[!] Caso uma opÁ„o inv·lida seja informada novamente, o sistema ser· encerrado.");
+    printf("\t\t| %-85s|\n", "[!] Op√ß√£o inv√°lida!! ");
+    printf("\t\t| %-85s|\n", "[!] Caso uma op√ß√£o inv√°lida seja informada novamente, o sistema ser√° encerrado.");
     printf("\t\t|%86s|\n", " ");     
-    printf("\t\t| %-85s|", "Digite a opÁ„o desejada: [ ]");
+    printf("\t\t| %-85s|", "Digite a op√ß√£o desejada: [ ]");
     printf("%s%s%s",linha02,linha02,linha02);                               
     scanf("%1d", &op);               
     }
