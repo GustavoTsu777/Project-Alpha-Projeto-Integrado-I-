@@ -11,8 +11,9 @@ main ()
 	// <---------------------- SISTEMA DE GERENCIAMENTO ACADEMIA ------------------------>
 	
 	// Vetores Inteiros:                             Vetores String:
-	int VcodInst[TF_INST],vcpfInst[TF_INST];  char VnomeInst[TF_INST][61],nomeTemp[61],vModalidade[61]; 
-	int VcodAluno[TF],VcpfAluno[TF];          char VnomeAluno[TF][61];
+	int VcodInst[TF_INST];                    char VnomeInst[TF_INST][61],nomeTemp[61],vModalidade[61]; 
+	int VcodAluno[TF];                        char VnomeAluno[TF][61],VcpfAluno[TF][12],cpfTemp[12]; 
+	
 	// Parte 3 - Modalidade:                  // Extras:
 	int VcodMod;                              char Vef[2], yes[]="s",no[]="n"; // Usado no loop verificador não está funcionando (Atualizar);
 	
@@ -25,7 +26,7 @@ main ()
 	float vValorAula=0,vValor=0;
 	
 	// Contadores:
-	int n,i=0,cont_inst=0,cont_alunos=0,TLI=0,TL=0,pos,limite=0; // OBS: "pos" == posição do vetor. 
+	int n,i=0,cont_inst=0,cont_alunos=0,TLI=0,TL=0,TLA=0,pos,limite=0; // OBS: "pos" == posição do vetor. 
 	
 	// <--------------------------------------------------------------------------------->
 	
@@ -34,15 +35,16 @@ main ()
 	char linha02[] = "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b"; // <-- Atualizado para versão em for!
 	
 	setlocale(LC_ALL,"Portuguese"); // <-- Define a linguagem local em Português.
+	
 	printf("\t\t%s%s\n" ,linha01,linha01);                                      // \n quebra linha, \t adiciona tabulação.
 	printf("\t\t|%86s|\n", " ");                                            
-	printf("\t\t|\t\t\t %-61s |\n","SISTEMA DE GERENCIAMENTO PROJECT ALPHA");   // Utilizado "largura de campo" (field width)
+	printf("\t\t|\t\t\t %-61s |\n","SISTEMA DE GERENCIAMENTO PROJECT ALPHA");   // Utilizado "largura de campo" 
 	printf("\t\t|%86s|\n", " ");                                                // Exemplo: %-40s
 	printf("\t\t%s%s\n" ,linha01,linha01);                                      // %  -> inicia a formatação
 	printf("\t\t|%86s|\n", " ");                                                // -  -> alinhamento à esquerda
 	printf("\t\t| %-84s |\n","[1] - Gestão de Cadastros");                      // 40 -> define a largura do campo em 40 caracteres
 	printf("\t\t| %-84s |\n","[2] - Gestão de Exclusões");                      // s  -> indica uma string
-	printf("\t\t| %-84s |\n","[3] - Lançamentos");                              // Usado para alinhar e organizar textos/interface no console.
+	printf("\t\t| %-84s |\n","[3] - Lançamentos");                              // Usado para alinhar a interface no terminal.
 	printf("\t\t| %-84s |\n","[4] - Emissão de Relatório");
 	printf("\t\t| %-84s |\n","[5] - Finalizar");
 	printf("\t\t|%86s|\n", " ");
@@ -105,7 +107,8 @@ main ()
           }
 	      fflush(stdin);
 		  gets(nomeTemp);
-		pos=0;
+		  pos=0;
+		  
 		while(pos<TLI && stricmp(nomeTemp,VnomeInst[pos]) !=0)
 		pos++;
 		if(pos<TLI)
@@ -119,7 +122,7 @@ main ()
 			 strcpy(VnomeInst[TLI],nomeTemp);
 			 
 	         printf("\t\t%s%s\n",linha01,linha01);
-	         printf("\t\t| %-85s|\n", "[REGRA] Matrícula deve conter exatamente 4 dígitos.");
+	         printf("\t\t| %-85s|\n", "[REGRA] Matrícula deve conter no máximo 4 dígitos.");
 	         printf("\t\t| %-84s |","Digite a Matrícula do Instrutor: [    ]");
 	         for(i = 0; i < 52; i++)
 	         {
@@ -168,7 +171,7 @@ main ()
 	    Rep_loop=0;
 	    cont_alunos=0;
 	    
-	    printf("\t\t%s%s%s\n",linha01,linha01);
+	    printf("\t\t%s%s\n",linha01,linha01);
 	    printf("\t\t| %-85s|\n", "[REGRA] Limite de 100 Cadastros.");
         printf("\t\t| %-85s|","Digite o número de alunos que você deseja cadastrar: [   ]");
         
@@ -209,11 +212,39 @@ main ()
         
         // <-------------------------------- WHILE COM REPETIÇÃO DE CADASTRO: ------------------------------------------->
         
-	   	while(TL<TF && limite==0 && cont_alunos<Rep_loop && stricmp(Vef,no) !=0)
+	   	while(TLA<TF && limite==0 && cont_alunos<Rep_loop && stricmp(Vef,no) !=0)
 	    {
 	         printf("\t\t%s%s\n",linha01,linha01);	
 	         printf("\t\t|\t\t\t\t%-53s  |\n","CADASTRO DE ALUNOS");
 	         printf("\t\t%s%s\n",linha01,linha01);
+	         
+	    // <-------------------------------- ENTRADA DO CPF: ------------------------------------------->
+	          printf("\t\t|%86s|\n", " ");
+	          printf("\t\t| %-85s|\n", "[REGRA] CPF deve conter exatamente 11 dígitos.");
+	          printf("\t\t| %-84s |","Digite somente os números do CPF: [           ]");
+	       for(i = 0; i < 51; i++)
+	       {
+              printf("\b");
+           }
+           
+           fflush(stdin);
+		   gets(cpfTemp);
+           pos=0;
+           
+           while(pos<TLA && stricmp(cpfTemp,VcpfAluno[pos]) !=0) // Vai rodar até encontrar (string) == (string_da_posição) 
+	         pos++;
+	         
+	         if(pos<TLA) //OBS: se posição for igual a TLA <-- Não encontrou o valor.
+	         {
+	         	printf("\t\t|%86s|\n", " ");
+			    printf("\t\t| %-85s|\n", "[!] CPF já cadastrado tente novamente.");
+			    printf("\t\t%s%s\n",linha01,linha01);
+	         }
+         else
+	 {   // Else-01
+	         strcpy(VcpfAluno[TLA],cpfTemp);	         
+	         	        	    
+	     // <-------------------------------- ENTRADA DO NOME: ------------------------------------------->
 	         printf("\t\t|%86s|\n", " ");
 	         printf("\t\t| %-85s|\n", "[REGRA] Nome completo deve conter no máximo 60 caracteres.");
 	         printf("\t\t| %-84s |\n","Digite o nome completo do Aluno:");
@@ -225,30 +256,34 @@ main ()
 	         fflush(stdin);
 		     gets(nomeTemp);
 	      	 pos=0;
-		while(pos<TL && stricmp(nomeTemp,VnomeAluno[pos]) !=0)
+		while(pos<TLA && stricmp(nomeTemp,VnomeAluno[pos]) !=0)
 		pos++;
-		if(pos<TL)
+		
+		 if(pos<TLA)
 		    {
 		    printf("\t\t|%86s|\n", " ");
 			printf("\t\t| %-85s|\n", "[!] Aluno já cadastrado tente novamente.");
 			printf("\t\t%s%s\n",linha01,linha01);	
 	     	}
-		else // Inserir os dados do aluno nos vetores:
+		 else // Inserir os dados do aluno nos vetores:
 			{
-			 strcpy(VnomeAluno[TL],nomeTemp);
+			 strcpy(VnomeAluno[TLA],nomeTemp);
 			 
-	         printf("\t\t%s%s\n",linha01,linha01);
-	         printf("\t\t| %-85s|\n", "[REGRA] Matrícula deve conter exatamente 4 dígitos.");
+			 // <-------------------------------- ENTRADA DA MATRÍCULA: -------------------------------------->
+	         printf("\t\t|%86s|\n", " ");
+	         printf("\t\t| %-85s|\n", "[REGRA] Matrícula deve conter no máximo 4 dígitos.");
 	         printf("\t\t| %-84s |","Digite a Matrícula do Aluno: [    ]");
 	         for(i = 0; i < 56; i++)
 	         {
              printf("\b");
              }
 	         scanf("%d", &temp);
+	         
 	         pos=0;
-	         while(pos < TL && temp != VcodAluno[pos])
+	         
+	         while(pos < TLA && temp != VcodAluno[pos])
 	         pos++;
-	         if(pos<TL)
+	         if(pos<TLA)
 	         {
 	         printf("\t\t|%86s|\n", " ");
 			 printf("\t\t| %-85s|\n", "[!] Matrícula já utilizada tente novamente.");
@@ -256,22 +291,22 @@ main ()
 	         }
 	         else
 			 {
-			 VcodAluno[TL] = temp;
+			 VcodAluno[TLA] = temp;
 			 temp = 0;
 			 cont_alunos++; // <-- Se precisar, esse é o contador de cadastros de alunos.
-	         TL++;       // <-- Implementa TL para próxima posição do vetor!!
+	         TLA++;       // <-- Implementa TLA para próxima posição do vetor!!
 	         printf("\t\t%s%s\n",linha01,linha01);
 	         
-	         	printf("\t\t| %-67s REGISTRO: [%4.4d] |","CADASTRO CONCLUíDO COM SUCESSO!",TL); //<-- Utilizado TL invés de cont_alunos.
+	         	printf("\t\t| %-67s REGISTRO: [%4.4d] |","CADASTRO CONCLUíDO COM SUCESSO!",TLA); //<-- Utilizado TLA invés de cont_alunos.
 	         	printf("\n\t\t|%86s|", " ");
 	         	printf("\n\t\t| %-s","Nome do Aluno: ");
 	         	
 	         	// Exibição com caixa fixa:
-	            // printf("[%-68.68s]",VnomeAluno[TLI-1]);   // <-- [Negativo = esquerda(largura total . imprimir no máximo 68 chars)S = String]
+	            // printf("[%-68.68s]",VnomeAluno[TLA-1]);   // <-- [Negativo = esquerda(largura total . imprimir no máximo 68 chars)S = String]
 	            
-	            printf("[%s]%*s|",VnomeAluno[TL-1],68-strlen(VnomeAluno[TL-1]), " ");     // 68 == Quantidade de Espaços - Qt. de Chars
+	            printf("[%s]%*s|",VnomeAluno[TLA-1],68-strlen(VnomeAluno[TLA-1]), " ");     // 68 == Quantidade de Espaços - Qt. de Chars
 	            printf("\n");
-	            printf("\t\t| %-10s [%4.4d] %67s|\n","Matrícula:",VcodAluno[TL-1], " ");  // <-- Isso é perfeição! 
+	            printf("\t\t| %-10s [%4.4d] %67s|\n","Matrícula:",VcodAluno[TLA-1], " ");  // <-- Isso é perfeição! 
 	            printf("\t\t%s%s\n",linha01,linha01);
 	            
 	                if(cont_alunos==Rep_loop)
@@ -285,12 +320,14 @@ main ()
 	            
 				      fflush(stdin);
 	                  gets(Vef);
-	                if(stricmp(Vef,no) ==0)
-	                {
-	                Rep_loop=0;
-	                }
+	                  if(stricmp(Vef,no) ==0)
+	                  {
+	                  Rep_loop=0;
+	                  }
+	                  
 	                else
 	                {
+	                	cont_alunos = 0;
 	                	Rep_loop=0;
 	                    printf("\t\t%s%s%s\n",linha01,linha01);
 	                    printf("\t\t| %-85s|\n", "[REGRA] Limite de 100 Cadastros.");
@@ -319,33 +356,33 @@ main ()
                               scanf("%d", &Rep_loop);
                         }
 	                }
-	                if(stricmp(Vef,yes) !=0 && stricmp(Vef,no) !=0)
-	                {
-	              
-                      printf("\t\t| %-85s|\n", "[!] Opção inválida!! ");
-                      printf("\t\t| %-85s|\n", "[!] Caso uma opção inválida seja informada novamente, o sistema será encerrado.");
-                      printf("\t\t|%86s|\n", " ");     
-                    
-                      printf("\t\t%s%s\n",linha01,linha01);
-	            
-	                   printf("\t\t| %-85s|\n", "[REGRA] Digite [s] para continuar ou [n] para encerrar.");
-	                   printf("\t\t| %-85s|","Deseja continuar? [ ]");
-	                   
-					   for(i = 0;i < 67;i++)
+	                   if(stricmp(Vef,yes) !=0 && stricmp(Vef,no) !=0)
 	                   {
-	                    printf("\b");
-	                   }	 
+	              
+                        printf("\t\t| %-85s|\n", "[!] Opção inválida!! ");
+                        printf("\t\t| %-85s|\n", "[!] Caso uma opção inválida seja informada novamente, o sistema será encerrado.");
+                        printf("\t\t|%86s|\n", " ");     
+                    
+                        printf("\t\t%s%s\n",linha01,linha01);
 	            
-				       fflush(stdin);
-	                   gets(Vef);
+	                    printf("\t\t| %-85s|\n", "[REGRA] Digite [s] para continuar ou [n] para encerrar.");
+	                    printf("\t\t| %-85s|","Deseja continuar? [ ]");
+	                   
+					    for(i = 0;i < 67;i++)
+	                    {
+	                      printf("\b");
+	                    }	 
+	            
+				        fflush(stdin);
+	                    gets(Vef);
 	            	
-	                }
+	                   }
 	            
-	                 printf("\t\t%s%s\n",linha01,linha01);
+	                  printf("\t\t%s%s\n",linha01,linha01);
                     } // <-- If Verificador de cont.
 	         } // <-- Else-01
 	        } // <-- Else-02
-	        
+    } // Fechamento <-- Else-03 No caso foi feito ao contrario então sim esse seria o else-01
 	    }   // <-- Fechamento do While 
 	     // <----------------------------------- CADASTRO DE ALUNOS [FIM AQUI] ------------------------------------------->
         break;
@@ -382,9 +419,8 @@ main ()
 	                 
 	    // <--------------------------------------------------------------------------------------------------->
 	                 
-	                 
-	        printf("\t\t%s%s\n",linha01,linha01);
-	        printf("\t\t|%86s|\n", " ");
+	     printf("\t\t%s%s\n",linha01,linha01);
+	     printf("\t\t|%86s|\n", " ");
 	         printf("\t\t| %-85s|\n", "[REGRA] Modalidade deve conter no máximo 60 caracteres.");
 	         printf("\t\t| %-84s |\n","Digite o nome da Modalidade:");
 	         printf("\t\t| [                                                            ]                       |");
@@ -394,7 +430,6 @@ main ()
                }
 	           fflush(stdin);
 		       gets(nomeTemp);
-        	
         	
         	
          break;
