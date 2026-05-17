@@ -8,7 +8,7 @@
 main ()
 {
 
-	// <---------------------- SISTEMA DE GERENCIAMENTO ACADEMIA ------------------------>
+	// <---------------------- SISTEMA DE GERENCIAMENTO - ACADEMIA ---------------------->
 	
 	// Vetores Inteiros:                             Vetores String:
 	int VcodInst[TF_INST];                    char VnomeInst[TF_INST][61],nomeTemp[61],vModalidade[TF][61]; 
@@ -101,6 +101,7 @@ main ()
 	      printf("\t\t|\t\t\t\t%-53s  |\n","CADASTRO DE INSTRUTORES");
 	      printf("\t\t%s%s\n",linha01,linha01);
 	      printf("\t\t|%86s|\n", " ");
+	      printf("\t\t| %-85s|\n","NOME COMPLETO");
 	      printf("\t\t| %-85s|\n", "[REGRA] Nome completo deve conter no máximo 60 caracteres.");
 	      printf("\t\t| %-84s |\n","Digite o nome completo do Instrutor:");
 	      printf("\t\t| [                                                            ]                       |");
@@ -125,6 +126,7 @@ main ()
 			 strcpy(VnomeInst[TLI],nomeTemp);
 			 
 	         printf("\t\t|%86s|\n", " ");
+	         printf("\t\t| %-85s|\n","MATRÍCULA");
 	         printf("\t\t| %-85s|\n", "[REGRA] Matrícula deve conter no máximo 4 dígitos.");
 	         printf("\t\t| %-84s |","Digite a Matrícula do Instrutor: [    ]");
 	         for(i = 0; i < 52; i++)
@@ -223,6 +225,7 @@ main ()
 	         
 	    // <-------------------------------- ENTRADA DO CPF: ------------------------------------------->
 	          printf("\t\t|%86s|\n", " ");
+	          printf("\t\t| %-85s|\n","CPF DO ALUNO");
 	          printf("\t\t| %-85s|\n", "[REGRA] CPF deve conter exatamente 11 dígitos.");
 	          printf("\t\t| %-84s |","Digite somente os números do CPF: [           ]");
 	       for(i = 0; i < 51; i++)
@@ -249,6 +252,7 @@ main ()
 	         	        	    
 	     // <-------------------------------- ENTRADA DO NOME: ------------------------------------------->
 	         printf("\t\t|%86s|\n", " ");
+	         printf("\t\t| %-85s|\n","NOME COMPLETO");
 	         printf("\t\t| %-85s|\n", "[1. REGRA] Não utilize caracteres especiais (ç, ã, acentos)."); // Não consegue printar corretamente muito problema se deixar.
 	         printf("\t\t| %-85s|\n", "[2. REGRA] Nome completo deve conter no máximo 60 caracteres.");
 	         printf("\t\t| %-84s |\n","Digite o nome completo do Aluno:");
@@ -273,8 +277,9 @@ main ()
 			{
 				strcpy(VnomeAluno[TLA],nomeTemp); //Recebe nome temporário.
 				
-		     // <-------------------------------- ENTRADA DATA DE VENCIMENTO: ------------------------------------------->
+		     // <----------------------------- ENTRADA DATA DE VENCIMENTO (MENSALIDADE): ------------------------------->
 				printf("\t\t| %85s|\n", " ");
+				printf("\t\t| %-85s|\n","VENCIMENTO DA MENSALIDADE");
 				printf("\t\t| %-85s|\n","[REGRA] Seguir conforme calendário 14/05/2026, somente números.");
 				printf("\t\t| %-84s |","Digite a data do vencimento: [        ]");
 		    for(i=0; i < 56;i++)
@@ -283,6 +288,23 @@ main ()
 				}
 		       scanf("%2d%2d%4d", &dia[TLA],&mes[TLA],&ano[TLA]);
 					
+		     // <----------------------------- VALIDAÇÃO DA DATA: ------------------------------->		
+				while(dia[TLA] <= 0 || dia[TLA] > 31 || mes[TLA] <= 0 || mes[TLA] > 12 || ano[TLA] < 2026)	
+				{
+					printf("\t\t| %85s|\n", " ");
+					printf("\t\t| %-85s|\n","[!] Data de vencimento inválida.");
+                    printf("\t\t| %-85s|\n","[REGRA] Dia: 1-31 | Mês: 1-12 | Ano: >= 2026.");
+					printf("\t\t| %85s|\n", " ");
+					printf("\t\t| %-85s|\n","VENCIMENTO DA MENSALIDADE");
+					printf("\t\t| %-85s|\n","[REGRA] Seguir conforme calendário 14/05/2026, somente números.");
+					printf("\t\t| %-84s |","Digite a data do vencimento: [        ]");
+		       		  for(i=0; i < 56;i++)
+			          {
+				         printf("\b");
+			          }
+		            scanf("%2d%2d%4d", &dia[TLA],&mes[TLA],&ano[TLA]);	
+					
+				}
 			 
 		     // <-------------------------------- ENTRADA VALOR DA MENSALIDADE: -------------------------------------->
 		        printf("\t\t| %85s|\n", " ");
@@ -305,6 +327,7 @@ main ()
 			 
 			 // <-------------------------------- ENTRADA DA MATRÍCULA: -------------------------------------->
 	         printf("\t\t|%86s|\n", " ");
+	         printf("\t\t| %-85s|\n","MATRÍCULA");
 	         printf("\t\t| %-85s|\n", "[REGRA] Matrícula deve conter no máximo 4 dígitos.");
 	         printf("\t\t| %-84s |","Digite a Matrícula do Aluno: [    ]");
 	         for(i = 0; i < 56; i++)
@@ -481,6 +504,7 @@ main ()
 	         // <------------------------------- CÓDIGO DA MODALIDADE: -------------------------------------->
 	        
             printf("\t\t|%86s|\n", " ");
+            printf("\t\t| %-85s|\n","CÓDIGO DA MODALIDADE");
         	printf("\t\t| %-85s|\n", "[REGRA] O código deve conter no máximo 2 dígitos.");
 	        printf("\t\t| %-84s |","Digite o código da modalidade: [  ]");
 	           for(i = 0;i < 54;i++)
@@ -508,6 +532,7 @@ main ()
 	                 
 	     
 	         printf("\t\t|%86s|\n", " ");
+	         printf("\t\t| %-85s|\n","NOME DA MODALIDADE");
 	         printf("\t\t| %-85s|\n", "[1. REGRA] Não utilize caracteres especiais (ç, ã, acentos)."); // Não consegue printar corretamente muito problema se deixar.
 	         printf("\t\t| %-85s|\n", "[2. REGRA] Modalidade deve conter no máximo 60 caracteres.");
 	         printf("\t\t| %-84s |\n","Digite o nome da Modalidade:");
@@ -535,6 +560,7 @@ main ()
              // <------------------------------- VALOR DA MODALIDADE: -------------------------------------->
         	
 			  printf("\t\t|%86s|\n", " ");
+			  printf("\t\t| %-85s|\n","VALOR DA AULA");
 	          printf("\t\t| %-85s|\n","[1. REGRA] Aceito apenas valores de R$50,00 até R$300,00");
 			  printf("\t\t| %-85s|\n","[2. REGRA] Somente números.");
 	          printf("\t\t| %-84s |","Digite o valor da aula: [R$      ]");
@@ -586,17 +612,17 @@ main ()
 	                                           
 		// <----------------------------------- REPETIÇÃO SUB MENU (CADASTRO) [COMEÇO:] ---------------------------------------->  
 		
-    	printf("\t\t|\t\t\t\t %-53s |\n","MÓDULO DE CADASTROS");                                                
-    	printf("\t\t%s%s\n" ,linha01,linha01);  
-    	printf("\t\t| %-84s |\n","Selecione uma das operações disponíveis:");
-    	printf("\t\t|%86s|\n", " ");
-    	printf("\t\t| %-84s |\n","[1] Cadastro de Instrutores");                 
-	    printf("\t\t| %-84s |\n","[2] Cadastro de Alunos");                  
-	    printf("\t\t| %-84s |\n","[3] Cadastro de Modalidades");                         
-	    printf("\t\t| %-84s |\n","[4] Retornar ao Menu Principal");
-	    printf("\t\t|%86s|\n", " ");
-	    printf("\t\t| %-85s|","Digite a opção desejada: [ ]");
-	    printf("%s%s%s",linha02,linha02,linha02);
+    	 printf("\t\t|\t\t\t\t %-53s |\n","MÓDULO DE CADASTROS");                                                
+    	 printf("\t\t%s%s\n" ,linha01,linha01);  
+    	 printf("\t\t| %-84s |\n","Selecione uma das operações disponíveis:");
+    	 printf("\t\t|%86s|\n", " ");
+    	 printf("\t\t| %-84s |\n","[1] Cadastro de Instrutores");                 
+	     printf("\t\t| %-84s |\n","[2] Cadastro de Alunos");                  
+	     printf("\t\t| %-84s |\n","[3] Cadastro de Modalidades");                         
+	     printf("\t\t| %-84s |\n","[4] Retornar ao Menu Principal");
+	     printf("\t\t|%86s|\n", " ");
+	     printf("\t\t| %-85s|","Digite a opção desejada: [ ]");
+	     printf("%s%s%s",linha02,linha02,linha02);
 	     scanf("%d", &sub_op);
 	    
         } // fechamento While Repetição Sub Menu <-- CADASTROS!
@@ -604,7 +630,163 @@ main ()
         break;
     		
         case 2:
-        	
+        
+		printf("\t\t|\t\t\t\t %-53s |\n","MÓDULO DE EXCLUSÃO");                                                
+    	printf("\t\t%s%s\n" ,linha01,linha01);  
+    	printf("\t\t| %-84s |\n","Selecione uma das operações disponíveis:");
+    	printf("\t\t|%86s|\n", " ");
+    	printf("\t\t| %-84s |\n","[1] Exclusão de Instrutores");                 
+	    printf("\t\t| %-84s |\n","[2] Exclusão de Alunos");                  
+	    printf("\t\t| %-84s |\n","[3] Exclusão de Modalidades");    
+		printf("\t\t| %-84s |\n","[4] Exclusão de Lançamentos");      
+	    printf("\t\t| %-84s |\n","[5] Retornar ao Menu Principal");
+	    printf("\t\t|%86s|\n", " ");
+	    printf("\t\t| %-85s|","Digite a opção desejada: [ ]");
+	    printf("%s%s%s",linha02,linha02,linha02);
+	    scanf("%d", &sub_op);
+		
+		while(sub_op >=1 && sub_op <=4)
+		{
+		switch(sub_op) // SUB MENU [2] <-- MÓDULO DE EXCLUSÃO:
+		{
+		    case 1:
+		  	
+		  	
+		  	
+		  	break;
+			
+			case 2:
+		 // <-------------------------------- EXCLUSÃO DE ALUNOS [COMEÇO]: ------------------------------------------->
+		 
+		  	 printf("\t\t%s%s\n",linha01,linha01);	
+	         printf("\t\t|\t\t\t\t%-53s  |\n","EXCLUSÃO DE ALUNOS");
+	         printf("\t\t%s%s\n",linha01,linha01);
+	         
+	     // <---------------------------------------- PESQUISAR CPF: ----------------------------------------------->
+	          printf("\t\t|%86s|\n", " ");
+	          printf("\t\t| %-85s|\n", "PESQUISAR CADASTRO:");
+	          printf("\t\t| %-85s|\n", "[REGRA] CPF deve conter exatamente 11 dígitos.");
+	          printf("\t\t| %-84s |","Digite somente os números do CPF: [           ]");
+	            for(i = 0; i < 51; i++)
+	            {
+                  printf("\b");
+                }
+           
+           fflush(stdin);
+		   gets(cpfTemp);
+           pos=0;
+           
+           // <-------------------------------------- VALIDAÇÃO DO CPF: ------------------------------------------->
+           
+           while(pos<TLA && stricmp(cpfTemp,VcpfAluno[pos]) !=0) // Vai rodar até encontrar (string) == (string_da_posição) 
+	         pos++;
+	         
+	         if(pos<TLA) //OBS: Se for menor encontrou o cadastrado.
+	         {
+	         	
+	         	printf("\t\t%s%s\n",linha01,linha01);
+	         	printf("\t\t| %-67s REGISTRO: [%4.4d] |\n","CADASTRO ENCONTRADO!",pos+1); // <--- VERIFICAR SE REGISTRO ESTÁ CORRETO (pos+1)
+			    
+			    printf("\t\t|%86s|\n", " ");
+			    printf("\t\t| %-s","Nome do Aluno: "); // <-- aqui é 16
+			    printf("[%s]%*s|",VnomeAluno[pos],68-strlen(VnomeAluno[pos]), " "); // 68 é o total depois da subtração dos chars do printf acima.
+			    printf("\n\t\t| %-s","CPF: ");
+			    printf("[%.3s.%.3s.%.3s-%.2s]%*s|",VcpfAluno[pos],VcpfAluno[pos]+3,VcpfAluno[pos]+6,VcpfAluno[pos]+9,75-strlen(VcpfAluno[pos]), " ");
+			    printf("\n");
+			    printf("\t\t%s%s\n",linha01,linha01);
+			    
+			   // <-------------------------------------- VALIDAÇÃO DE EXCLUSÃO: ---------------------------------------->
+			   
+			     printf("\t\t| %-85s|\n", "[AVISO] Esta ação removerá permanentemente o cadastro do aluno.");
+			     printf("\t\t|%86s|\n", " ");
+			     printf("\t\t| %-85s|\n", "[CONFIRMAÇÃO] Por segurança, informe novamente o CPF do aluno.");
+	             printf("\t\t| %-84s |","Digite somente os números do CPF: [           ]");
+	               for(i = 0; i < 51; i++)
+	               {
+                     printf("\b");
+                   }
+           
+                 fflush(stdin);
+		         gets(cpfTemp);
+			    
+			    if(stricmp(cpfTemp,VcpfAluno[pos]) ==0)
+			    {
+			    
+			    	for(i=pos;i < TLA-1;i++) // Começa da posição encontrada e desloca tudo para trás | TLA-1 pra não acessar cadastro não existente
+					{			      			      
+			      		strcpy(VcpfAluno[i],VcpfAluno[i+1]);          // | No caso a próxima posição sobreescreve a anterior;
+			      			  									      // | Começa do número (pos) encontrado;
+			      		strcpy(VnomeAluno[i],VnomeAluno[i+1]);        // |(i+1) vai até antes da última posição, porque vou precisar pegar a próxima.
+			      												
+			      		vValor[i] = vValor[i+1];						
+			      
+			      		VcodAluno[i] = VcodAluno[i+1];
+			      
+			      		dia[i] = dia[i+1];
+				  		mes[i] = mes[i+1];
+				  		ano[i] = ano[i+1];			      			      
+			      
+			        }
+			    
+			      TLA=TLA-1; // Diminui a quantidade total de alunos cadastrados.
+			      
+			      printf("\t\t%s%s\n",linha01,linha01);
+	         	  printf("\t\t| %-85s|\n", "[SUCESSO] Exclusão do aluno realizada com sucesso!");
+	         	  printf("\t\t%s%s\n",linha01,linha01);
+			      
+			   } // Fechamento IF-02-EX (Verificação de segurança)
+			   
+			   else { // <-- Errou CPF NA VERIFICAÇÃO 
+			   	printf("\t\t%s%s\n",linha01,linha01);
+	         	printf("\t\t| %-85s|\n", "[!] Falha na confirmação de segurança. Exclusão cancelada.");
+	         	printf("\t\t%s%s\n",linha01,linha01);
+			   } 
+			   
+	         } // Fechamento IF-01-EX
+	         else //OBS: se posição for igual a TLA <-- Não encontrou o valor.
+	         {
+	         	printf("\t\t%s%s\n",linha01,linha01);
+	         	printf("\t\t| %-85s|\n", "[!] Cadastro do aluno não encontrado.");
+	         	printf("\t\t%s%s\n",linha01,linha01);
+	         	
+	         }
+		  	// <-------------------------------- EXCLUSÃO DE ALUNOS [FIM]: ------------------------------------------->
+		  	break;
+		  	
+		  	case 3:
+		  	
+		  	
+		  	break;
+		  	
+		  	case 4:
+		  	
+		  	
+		  	break;
+			
+			case 5:
+		  	// CASE DE SAÍDA (NÃO INSERIR CÓDIGO [AQUI]);
+		  	break;
+			
+		}
+		
+		 // <------------------------------ REPETIÇÃO MÓDULO DE EXCLUSÃO [COMEÇO AQUI] ----------------------------------->  
+		 
+			printf("\t\t|\t\t\t\t %-53s |\n","MÓDULO DE EXCLUSÃO");                                                
+    		printf("\t\t%s%s\n" ,linha01,linha01);  
+    		printf("\t\t| %-84s |\n","Selecione uma das operações disponíveis:");
+    		printf("\t\t|%86s|\n", " ");
+    		printf("\t\t| %-84s |\n","[1] Exclusão de Instrutores");                 
+	   	    printf("\t\t| %-84s |\n","[2] Exclusão de Alunos");                  
+	   		printf("\t\t| %-84s |\n","[3] Exclusão de Modalidades");    
+			printf("\t\t| %-84s |\n","[4] Exclusão de Lançamentos");      
+	    	printf("\t\t| %-84s |\n","[5] Retornar ao Menu Principal");
+	    	printf("\t\t|%86s|\n", " ");
+	    	printf("\t\t| %-85s|","Digite a opção desejada: [ ]");
+	    	printf("%s%s%s",linha02,linha02,linha02);
+	    	scanf("%d", &sub_op);
+	    	
+		}
+		// <---------------------------------- REPETIÇÃO MÓDULO DE EXCLUSÃO [FIM] ---------------------------------------->
          break;
 
         case 3:
@@ -615,8 +797,8 @@ main ()
         	
          break;
         
-        case 5:
-        	
+        case 5: 
+		// Sessão finalizada - Sistema Offline.
          break;
 
 
@@ -634,7 +816,7 @@ main ()
     	
        } // fechamento do Switch-01
        
-    // <---------------------------------- REPETIÇÃO MENU PRINCIPAÇ [AQUI] ---------------------------------------->  
+    // <---------------------------------- REPETIÇÃO MENU PRINCIPAL [AQUI] ---------------------------------------->  
      printf("\t\t|%86s|\n", " "); 
      printf("\t\t%s%s\n",linha01,linha01);
 	 printf("\t\t|\t\t\t      %-54s   |\n","PROJECT ALPHA - MENU PRINCIPAL");
@@ -666,7 +848,9 @@ main ()
     scanf("%1d", &op);               
     }
     printf("\t\t%s%s\n" ,linha01,linha01); 
-    
+      
     } // fechamento While-01
-	
+	      printf("\t\t%s%s\n",linha01,linha01);	
+	      printf("\t\t| %24s%-59s  |\n", " ","[OFFLINE] Sessão finalizada com sucesso.");
+	      printf("\t\t%s%s\n",linha01,linha01);
 } // Fechamento Main() 
