@@ -15,18 +15,19 @@ main ()
 	int VcodAluno[TF];                        char VnomeAluno[TF][61],VcpfAluno[TF][12],cpfTemp[12]; 
 	
 	// Parte 3 - Modalidade:                  // Extras:
-	int VcodMod;                              char Vef[2], yes[]="s",no[]="n"; // Usado no loop verificador não está funcionando (Atualizar);
+	int VcodMod[TF];                              char Vef[2], yes[]="s",no[]="n"; // Usado no loop verificador não está funcionando (Atualizar);
 	
-	
+	// Cadastro Alunos - Data:
+	int dia[TF],mes[TF],ano[TF];
 	
 	// Opção Escolhida/Sub Menu e Variável temporária:
 	int op=0,sub_op=0,temp=0,Rep_loop=0;
 	
 	// Vetores Float:
-	float vValorAula=0,vValor=0;
+	float vValorAula[TF],vValor[TF];
 	
 	// Contadores:
-	int n,i=0,cont_inst=0,cont_alunos=0,TLI=0,TL=0,TLA=0,pos,limite=0; // OBS: "pos" == posição do vetor. 
+	int n,i=0,cont_inst=0,cont_alunos=0,TLI=0,TL=0,TLA=0,pos,limite=0,TLM=0; // OBS: "pos" == posição do vetor. 
 	
 	// <--------------------------------------------------------------------------------->
 	
@@ -267,7 +268,37 @@ main ()
 	     	}
 		 else // Inserir os dados do aluno nos vetores:
 			{
-			 strcpy(VnomeAluno[TLA],nomeTemp);
+				strcpy(VnomeAluno[TLA],nomeTemp); //Recebe nome temporário.
+				
+		     // <-------------------------------- ENTRADA DATA DE VENCIMENTO: ------------------------------------------->
+				printf("\t\t| %85s|\n", " ");
+				printf("\t\t| %-85s|\n","[REGRA] Seguir conforme calendário 14/05/2026, somente números.");
+				printf("\t\t| %-84s |","Digite a data do vencimento: [        ]");
+		    for(i=0; i < 56;i++)
+			    {
+				  printf("\b");
+				}
+		       scanf("%2d%2d%4d", &dia[TLA],&mes[TLA],&ano[TLA]);
+					
+			 
+		     // <-------------------------------- ENTRADA VALOR DA MENSALIDADE: -------------------------------------->
+		        printf("\t\t| %85s|\n", " ");
+		        printf("\t\t| %-85s|\n","PAINEL DE OFERTAS");
+		        printf("\t\t| %-85s|\n","[1] Plano Gold - Anual - de R$800,00 por R$500,00");
+		        printf("\t\t| %-85s|\n","[2] Plano Prata - Trimestral - de R$240,00 por R$199,90");
+		        printf("\t\t| %-85s|\n","[3] Plano Bronze - Mensal - por R$80,00");
+		        printf("\t\t| %-85s|\n","Ou pagamento personalizado.");
+		        printf("\t\t|%86s|\n", " ");
+		        printf("\t\t| %-85s|\n","[1. REGRA] Aceito apenas valores de R$10,00 até R$500,00");
+				printf("\t\t| %-85s|\n","[2. REGRA] Somente números.");
+				printf("\t\t| %-84s |","Digite o valor da mensalidade: [      ]");
+				
+		    for(i=0; i < 54;i++)
+			    {
+				  printf("\b");
+				}
+		       scanf("%f", &vValor[TLA]);
+			 
 			 
 			 // <-------------------------------- ENTRADA DA MATRÍCULA: -------------------------------------->
 	         printf("\t\t|%86s|\n", " ");
@@ -297,6 +328,8 @@ main ()
 	         TLA++;       // <-- Implementa TLA para próxima posição do vetor!!
 	         printf("\t\t%s%s\n",linha01,linha01);
 	         
+	         // <-------------------------------- REGISTRO DE CADASTRO [COMEÇO:] -------------------------------------->
+	         
 	         	printf("\t\t| %-67s REGISTRO: [%4.4d] |","CADASTRO CONCLUíDO COM SUCESSO!",TLA); //<-- Utilizado TLA invés de cont_alunos.
 	         	printf("\n\t\t|%86s|", " ");
 	         	printf("\n\t\t| %-s","Nome do Aluno: ");
@@ -305,11 +338,44 @@ main ()
 	            // printf("[%-68.68s]",VnomeAluno[TLA-1]);   // <-- [Negativo = esquerda(largura total . imprimir no máximo 68 chars)S = String]
 	            
 	            printf("[%s]%*s|",VnomeAluno[TLA-1],68-strlen(VnomeAluno[TLA-1]), " ");     // 68 == Quantidade de Espaços - Qt. de Chars
-	            printf("\n");
-	            printf("\t\t| %-10s [%4.4d] %67s|\n","Matrícula:",VcodAluno[TLA-1], " ");  // <-- Isso é perfeição! 
-	            printf("\t\t%s%s\n",linha01,linha01);
+	            	            
+	            printf("\n\t\t| %-s","CPF: "); // Aqui ficou 81 <--
+	            printf("[%.3s.%.3s.%.3s-%.2s]%*s|",VcpfAluno[TLA-1],VcpfAluno[TLA-1]+3,VcpfAluno[TLA-1]+6,VcpfAluno[TLA-1]+9,75-strlen(VcpfAluno[TLA-1]), " ");     // 65 == Quantidade de Espaços - Qt. de Chars
+	            printf("\n\t\t|%86s|", " "); // Acima: %.3s imprimi somente 3 chars.
+	            printf("\n\t\t| %-10s [%4.4d] %67s|\n","Matrícula:",VcodAluno[TLA-1], " ");  // 
+	            printf("\t\t| %-10s [%2.2d/%2.2d/%4.4d] %52s|","Data de vencimento:",dia[TLA-1],mes[TLA-1],ano[TLA-1], " ");  
+	            printf("\n\t\t|%86s|", " "); // Acima Reserva 2 espaços e imprimi 2 espaços em int.
 	            
-	                if(cont_alunos==Rep_loop)
+	            printf("\n\t\t| %-10s [R$%6.2f] %61s|","Mensalidade:",vValor[TLA-1], " ");  
+	            
+	            if(vValor[TLA-1] == 500)
+	            {
+					printf("\n\t\t| %-85s|", "Plano escolhido: [GOLD ANUAL]");;  
+	                printf("\n\t\t|%86s|", " ");
+	            }
+	            else if(vValor[TLA-1] == 199.90)
+	            {
+	            	printf("\n\t\t| %-85s|", "Plano escolhido: [PRATA TRIMENSAL]");;  
+	                printf("\n\t\t|%86s|", " ");
+	            }
+	            else if(vValor[TLA-1] == 80)
+	            {
+	            	printf("\n\t\t| %-85s|", "Plano escolhido: [BRONZE MENSAL]");;  
+	                printf("\n\t\t|%86s|", " ");
+	            }
+	            else
+	            {
+	            	printf("\n\t\t| %-85s|", "Plano escolhido: [PERSONALIZADO]");;  
+	                printf("\n\t\t|%86s|", " ");
+	            }
+	            
+	            
+	            printf("\n\t\t%s%s\n",linha01,linha01);
+	            
+	            // <-------------------------------- REGISTRO DE CADASTRO [FINAL ACIMA] -------------------------------------->
+	            
+	            
+	                if(cont_alunos==Rep_loop) // Validação de números de cadastros realizados.
 	                {
 	                 printf("\t\t| %-85s|\n", "[REGRA] Digite [s] para continuar ou [n] para encerrar.");
 	                 printf("\t\t| %-85s|","Deseja continuar? [ ]");
@@ -319,13 +385,14 @@ main ()
 	                 }	 
 	            
 				      fflush(stdin);
-	                  gets(Vef);
-	                  if(stricmp(Vef,no) ==0)
+	                  gets(Vef);	                  
+	                  
+	                  if(stricmp(Vef,no) ==0) // Se resposta for igual a não encerra o loop -->(quant de cadastros desejado).
 	                  {
 	                  Rep_loop=0;
 	                  }
 	                  
-	                else
+	                else // Pergunta e reinicia loop de quant.
 	                {
 	                	cont_alunos = 0;
 	                	Rep_loop=0;
@@ -340,21 +407,35 @@ main ()
         
                         scanf("%d", &Rep_loop);
         
-                        if(Rep_loop>100)
+                      
+        
+        
+                        // <--------------------------------- IF DE VERIFICAÇÃO (REPETIÇÃO - 2): ------------------------------------->
+        
+                      // Verifica se excedeu limite (1 Tentativa):
+                      if(Rep_loop>TF)
+                      {
+        	             printf("\t\t%s%s%s\n",linha01,linha01);
+                         printf("\t\t| %-85s|\n","[!] Limite excedido, tente novamente.");
+                       	 printf("\t\t| %-85s|\n","[!] 1 tentativa restante.");
+        	             printf("\t\t%s%s%s\n",linha01,linha01);
+	                     printf("\t\t| %-85s|\n", "[REGRA] Limite de 100 Cadastros.");
+                         printf("\t\t| %-85s|","Digite o número de alunos que você deseja cadastrar: [   ]");
+        
+                          for(i = 0; i<32; i++)
+                          {
+                             printf("\b");
+                          }
+        
+                        scanf("%d", &Rep_loop);
+        
+                       if(Rep_loop>TF)
                         {
-        	                printf("\t\t%s%s%s\n",linha01,linha01);
-                           	printf("\t\t| %-85s|\n","[!] Limite excedido, tente novamente.");
-              	            printf("\t\t%s%s%s\n",linha01,linha01);
-	                          printf("\t\t| %-85s|\n", "[REGRA] Limite de 100 Cadastros.");
-                              printf("\t\t| %-85s|","Digite o número de alunos que você deseja cadastrar: [   ]");
-        
-                              for(i = 0; i<32; i++)
-                              {
-                                printf("\b");
-                              }
-        
-                              scanf("%d", &Rep_loop);
+                         limite++; // Serve para parar o while de cadastro.
+                         printf("\t\t%s%s\n",linha01,linha01);
                         }
+         
+                      }
 	                }
 	                   if(stricmp(Vef,yes) !=0 && stricmp(Vef,no) !=0)
 	                   {
@@ -404,6 +485,7 @@ main ()
         	TLM <-- NO caso TL de Modalidade;
         	
         	//REPETE LEITOR + 2 Vef; */
+        	TLM=0;
         	
         	printf("\t\t%s%s\n",linha01,linha01);	
 	        printf("\t\t|\t\t\t\t%-53s  |\n","CADASTRO DE MODALIDADE");
@@ -415,23 +497,36 @@ main ()
 	                 {
 	                  printf("\b");
 	                 }	
-	                 scanf("%d", &VcodMod);
+	                 scanf("%d", &VcodMod[TLM]);
 	                 
+	           pos=0;     
+	     while(pos < TLM && VcodMod[TLM] != VcodMod[pos])
+	           pos++;
+	     
+	     if(pos<TLM)
+	     {
+	     	
+	     	
+	     }
+	     else {
+	     	
+	     	
+	     
 	    // <--------------------------------------------------------------------------------------------------->
 	                 
-	     printf("\t\t%s%s\n",linha01,linha01);
-	     printf("\t\t|%86s|\n", " ");
+	     
+	         printf("\t\t|%86s|\n", " ");
 	         printf("\t\t| %-85s|\n", "[REGRA] Modalidade deve conter no máximo 60 caracteres.");
 	         printf("\t\t| %-84s |\n","Digite o nome da Modalidade:");
 	         printf("\t\t| [                                                            ]                       |");
 	           for(i = 0; i < 85; i++)
 	           {
-                printf("\b");
+                 printf("\b");
                }
 	           fflush(stdin);
 		       gets(nomeTemp);
         	
-        	
+              } // Else -> Entrada após Verificação de Cod-Mod!
          break;
         
         case 4:
