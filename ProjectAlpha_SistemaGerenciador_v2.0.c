@@ -11,7 +11,7 @@ main ()
 	// <---------------------- SISTEMA DE GERENCIAMENTO ACADEMIA ------------------------>
 	
 	// Vetores Inteiros:                             Vetores String:
-	int VcodInst[TF_INST];                    char VnomeInst[TF_INST][61],nomeTemp[61],vModalidade[61]; 
+	int VcodInst[TF_INST];                    char VnomeInst[TF_INST][61],nomeTemp[61],vModalidade[TF][61]; 
 	int VcodAluno[TF];                        char VnomeAluno[TF][61],VcpfAluno[TF][12],cpfTemp[12]; 
 	
 	// Parte 3 - Modalidade:                  // Extras:
@@ -37,22 +37,22 @@ main ()
 	
 	setlocale(LC_ALL,"Portuguese"); // <-- Define a linguagem local em Português.
 	
-	printf("\t\t%s%s\n" ,linha01,linha01);                                      // \n quebra linha, \t adiciona tabulação.
+	printf("\t\t%s%s\n" ,linha01,linha01);                                         // \n quebra linha, \t adiciona tabulação.
 	printf("\t\t|%86s|\n", " ");                                            
-	printf("\t\t|\t\t\t %-61s |\n","SISTEMA DE GERENCIAMENTO PROJECT ALPHA");   // Utilizado "largura de campo" 
-	printf("\t\t|%86s|\n", " ");                                                // Exemplo: %-40s
-	printf("\t\t%s%s\n" ,linha01,linha01);                                      // %  -> inicia a formatação
-	printf("\t\t|%86s|\n", " ");                                                // -  -> alinhamento à esquerda
-	printf("\t\t| %-84s |\n","[1] - Gestão de Cadastros");                      // 40 -> define a largura do campo em 40 caracteres
-	printf("\t\t| %-84s |\n","[2] - Gestão de Exclusões");                      // s  -> indica uma string
-	printf("\t\t| %-84s |\n","[3] - Lançamentos");                              // Usado para alinhar a interface no terminal.
+	printf("\t\t| %23s%-62s|\n", " ","PROJECT ALPHA - SISTEMA DE GERENCIAMENTO");  // Utilizado "largura de campo" 
+	printf("\t\t|%86s|\n", " ");                                                   // Exemplo: %-40s
+	printf("\t\t%s%s\n" ,linha01,linha01);                                         // %  -> inicia a formatação
+	printf("\t\t|%86s|\n", " ");                                                   // -  -> alinhamento à esquerda
+	printf("\t\t| %-84s |\n","[1] - Gestão de Cadastros");                         // 40 -> define a largura do campo em 40 caracteres
+	printf("\t\t| %-84s |\n","[2] - Gestão de Exclusões");                         // s  -> indica uma string
+	printf("\t\t| %-84s |\n","[3] - Lançamentos");                                 // Usado para alinhar a interface no terminal.
 	printf("\t\t| %-84s |\n","[4] - Emissão de Relatório");
 	printf("\t\t| %-84s |\n","[5] - Finalizar");
 	printf("\t\t|%86s|\n", " ");
 	printf("\t\t%s%s\n" ,linha01,linha01);  
 	printf("\t\t| %-85s|", "Digite a opção desejada: [ ]");
-    printf("%s%s%s",linha02,linha02,linha02);                                   // Utilizado: \b < -- Volta o cursor em 1 caractere.
-    scanf("%1d", &temp);                                                        // Aceita somente 1 dígito de número inteiro. ( %1d ) 
+    printf("%s%s%s",linha02,linha02,linha02);                                       // Utilizado: \b < -- Volta o cursor em 1 caractere.
+    scanf("%1d", &temp);                                                           // Aceita somente 1 dígito de número inteiro. ( %1d ) 
     
     if(temp>0 && temp<=5) // <-- (IF-01) Validação de "temp".
     { op = temp;
@@ -68,6 +68,8 @@ main ()
     printf("%s%s%s",linha02,linha02,linha02);                               
     scanf("%1d", &op);               
     }
+    
+    
     printf("\t\t%s%s\n" ,linha01,linha01); 
     
     while(op>=1 && op<=4) //Repetição de Menu (While-01)
@@ -122,7 +124,7 @@ main ()
 			{
 			 strcpy(VnomeInst[TLI],nomeTemp);
 			 
-	         printf("\t\t%s%s\n",linha01,linha01);
+	         printf("\t\t|%86s|\n", " ");
 	         printf("\t\t| %-85s|\n", "[REGRA] Matrícula deve conter no máximo 4 dígitos.");
 	         printf("\t\t| %-84s |","Digite a Matrícula do Instrutor: [    ]");
 	         for(i = 0; i < 52; i++)
@@ -247,7 +249,8 @@ main ()
 	         	        	    
 	     // <-------------------------------- ENTRADA DO NOME: ------------------------------------------->
 	         printf("\t\t|%86s|\n", " ");
-	         printf("\t\t| %-85s|\n", "[REGRA] Nome completo deve conter no máximo 60 caracteres.");
+	         printf("\t\t| %-85s|\n", "[1. REGRA] Não utilize caracteres especiais (ç, ã, acentos)."); // Não consegue printar corretamente muito problema se deixar.
+	         printf("\t\t| %-85s|\n", "[2. REGRA] Nome completo deve conter no máximo 60 caracteres.");
 	         printf("\t\t| %-84s |\n","Digite o nome completo do Aluno:");
 	         printf("\t\t| [                                                            ]                       |");
 	    for(i = 0; i < 85; i++)
@@ -469,54 +472,44 @@ main ()
         break;
 
         case 3:
-        // <----------------------------------- CADASTRO DE MODALIDADE [COMEÇO AQUI] ------------------------------------------->
-        /* RASCUNHO APAGAR DEPOIS:
-			printf("\t\t%s%s",linha01,linha01);
-        	printf("\t\t| %-85s|","CADASTRO DE MODALIDADE");
-        
-        	for(i = 0; i < 64; i++)
-        	{
-        	printf("\b");
-            }
-        	scanf("%d", &temp);
-        	
-        	//VERIFICADOR AQUI!!!
-        	
-        	TLM <-- NO caso TL de Modalidade;
-        	
-        	//REPETE LEITOR + 2 Vef; */
-        	TLM=0;
+        // <----------------------------------- CADASTRO DE MODALIDADE [COMEÇO AQUI] ------------------------------------->
         	
         	printf("\t\t%s%s\n",linha01,linha01);	
 	        printf("\t\t|\t\t\t\t%-53s  |\n","CADASTRO DE MODALIDADE");
 	        printf("\t\t%s%s\n",linha01,linha01);
-
+	        
+	         // <------------------------------- CÓDIGO DA MODALIDADE: -------------------------------------->
+	        
+            printf("\t\t|%86s|\n", " ");
         	printf("\t\t| %-85s|\n", "[REGRA] O código deve conter no máximo 2 dígitos.");
 	        printf("\t\t| %-84s |","Digite o código da modalidade: [  ]");
 	           for(i = 0;i < 54;i++)
 	                 {
 	                  printf("\b");
 	                 }	
-	                 scanf("%d", &VcodMod[TLM]);
+	                 scanf("%d", &temp);
 	                 
 	           pos=0;     
-	     while(pos < TLM && VcodMod[TLM] != VcodMod[pos])
+	     while(pos < TLM && temp != VcodMod[pos])
 	           pos++;
 	     
 	     if(pos<TLM)
 	     {
-	     	
-	     	
+	     	    printf("\t\t|%86s|\n", " ");
+			    printf("\t\t| %-85s|\n", "[!] Código já cadastrado tente novamente.");
+			    printf("\t\t%s%s\n",linha01,linha01);
 	     }
-	     else {
-	     	
-	     	
+	     else 
+		 {
+	     	VcodMod[TLM] = temp;
+	     	temp = 0;
 	     
-	    // <--------------------------------------------------------------------------------------------------->
+	         // <------------------------------- NOME DA MODALIDADE: -------------------------------------->
 	                 
 	     
 	         printf("\t\t|%86s|\n", " ");
-	         printf("\t\t| %-85s|\n", "[REGRA] Modalidade deve conter no máximo 60 caracteres.");
+	         printf("\t\t| %-85s|\n", "[1. REGRA] Não utilize caracteres especiais (ç, ã, acentos)."); // Não consegue printar corretamente muito problema se deixar.
+	         printf("\t\t| %-85s|\n", "[2. REGRA] Modalidade deve conter no máximo 60 caracteres.");
 	         printf("\t\t| %-84s |\n","Digite o nome da Modalidade:");
 	         printf("\t\t| [                                                            ]                       |");
 	           for(i = 0; i < 85; i++)
@@ -526,16 +519,72 @@ main ()
 	           fflush(stdin);
 		       gets(nomeTemp);
         	
-              } // Else -> Entrada após Verificação de Cod-Mod!
+        	pos=0;
+        	while(pos < TLM && stricmp(nomeTemp,vModalidade[pos]) !=0)
+	        pos++;
+        	if(pos < TLM)
+        	{
+        		printf("\t\t|%86s|\n", " ");
+			    printf("\t\t| %-85s|\n", "[!] Modalidade já cadastrada, tente novamente.");
+			    printf("\t\t%s%s\n",linha01,linha01);
+        	}
+        	else
+        	{
+        	strcpy(vModalidade[TLM],nomeTemp);
+        	
+             // <------------------------------- VALOR DA MODALIDADE: -------------------------------------->
+        	
+			  printf("\t\t|%86s|\n", " ");
+	          printf("\t\t| %-85s|\n","[1. REGRA] Aceito apenas valores de R$50,00 até R$300,00");
+			  printf("\t\t| %-85s|\n","[2. REGRA] Somente números.");
+	          printf("\t\t| %-84s |","Digite o valor da aula: [R$      ]");
+	            for(i = 0;i < 59; i++)
+				{
+                 printf("\b");
+                }
+				scanf("%f", &vValorAula[TLM]);
+				
+				while(vValorAula[TLM]<50 || vValorAula[TLM]>300) // Verifica se é menor que R$50,00 ou R$300,00;
+				{
+					printf("\t\t|%86s|\n", " ");
+				 	printf("\t\t| %-85s|\n","[!] Limite excedido, tente novamente.");
+				 	printf("\t\t| %-85s|\n","[1. REGRA] Aceito apenas valores de R$50,00 até R$300,00");
+			        printf("\t\t| %-85s|\n","[2. REGRA] Somente números.");
+	                printf("\t\t| %-84s |","Digite o valor da aula: [R$      ]");
+	                  for(i = 0;i < 59; i++)
+				      {
+                        printf("\b");
+                      }
+				      scanf("%f", &vValorAula[TLM]);
+				 	
+				}
+				
+				TLM++;
+				printf("\t\t%s%s\n",linha01,linha01);
+	
+             // <----------------------------------- REGISTRO DE MODALIDADE: ----------------------------------->
+             
+             	printf("\t\t| %-68s REGISTRO: [%3.3d] |","CADASTRO CONCLUíDO COM SUCESSO!",TLM); 
+             	printf("\n\t\t|%86s|", " ");
+            
+                printf("\n\t\t| %-12s[%s]%*s|","Modalidade: ",vModalidade[TLM-1],71-strlen(vModalidade[TLM-1]), " ");
+                printf("\n\t\t| %-12s[%2.2d]%69s|","Código: ",VcodMod[TLM-1], " ");
+                printf("\n\t\t| %-10s [R$%6.2f] %59s|","Valor da aula:",vValorAula[TLM-1], " "); 
+		        printf("\n\t\t%s%s\n" ,linha01,linha01);
+				
+        	} // Else2-M -> Entrada após Verificação de String-Mod!
+        } // Else-1-M -> Entrada após Verificação de Cod-Mod!
+        
+        // <----------------------------------- CADASTRO DE MODALIDADE [FINAL] ------------------------------------->
          break;
         
         case 4:
-        	
+        	// CASE DE SAÍDA (NÃO INSERIR CÓDIGO [AQUI]);
          break;
 	    
 	    } // fechamento Switch-02
 	                                           
-		// <----------------------------------- REPETIÇÃO SUB MENU [AQUI] ------------------------------------------->  
+		// <----------------------------------- REPETIÇÃO SUB MENU (CADASTRO) [COMEÇO:] ---------------------------------------->  
 		
     	printf("\t\t|\t\t\t\t %-53s |\n","MÓDULO DE CADASTROS");                                                
     	printf("\t\t%s%s\n" ,linha01,linha01);  
@@ -550,7 +599,8 @@ main ()
 	    printf("%s%s%s",linha02,linha02,linha02);
 	     scanf("%d", &sub_op);
 	    
-        } // fechamento While Repetição Sub Menu <-- Cadastros!
+        } // fechamento While Repetição Sub Menu <-- CADASTROS!
+        // <----------------------------------- REPETIÇÃO SUB MENU (CADASTRO) [FINAL] -------------------------------------------> 
         break;
     		
         case 2:
@@ -583,7 +633,8 @@ main ()
     	
     	
        } // fechamento do Switch-01
-    // <----------------------------------- REPETIÇÃO MENU [AQUI] ------------------------------------------->  
+       
+    // <---------------------------------- REPETIÇÃO MENU PRINCIPAÇ [AQUI] ---------------------------------------->  
      printf("\t\t|%86s|\n", " "); 
      printf("\t\t%s%s\n",linha01,linha01);
 	 printf("\t\t|\t\t\t      %-54s   |\n","PROJECT ALPHA - MENU PRINCIPAL");
@@ -618,19 +669,4 @@ main ()
     
     } // fechamento While-01
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-}
+} // Fechamento Main() 
