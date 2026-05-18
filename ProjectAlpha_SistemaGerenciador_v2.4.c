@@ -18,16 +18,16 @@ main ()
 	int VcodMod[TF];                              char Vef[2], yes[]="s",no[]="n"; // Usado no loop verificador não está funcionando (Atualizar);
 	
 	// Cadastro Alunos - Data:
-	int dia[TF],mes[TF],ano[TF];
+	int dia[TF],mes[TF],ano[TF],dia_temp,mes_temp,ano_temp; 
 	
 	// Opção Escolhida/Sub Menu e Variável temporária:
-	int op=0,sub_op=0,temp=0,Rep_loop=0;
+	int op=0,sub_op=0,temp=0,Rep_loop=0,cod_mod=0;
 	
 	// Vetores Float:
-	float vValorAula[TF],vValor[TF];
+	float vValorAula[TF],vValor[TF],vValorAluno[TF];
 	
 	// Contadores:
-	int n,i=0,cont_inst=0,cont_alunos=0,TLI=0,TL=0,TLA=0,pos,limite=0,TLM=0; // OBS: "pos" == posição do vetor. 
+	int i=0,cont_inst=0,cont_alunos=0,TLI=0,TL=0,TLA=0,pos,limite=0,TLM=0,excluir=0; // OBS: "pos" == posição do vetor. 
 	
 	// <--------------------------------------------------------------------------------->
 	
@@ -280,7 +280,8 @@ main ()
 		     // <----------------------------- ENTRADA DATA DE VENCIMENTO (MENSALIDADE): ------------------------------->
 				printf("\t\t| %85s|\n", " ");
 				printf("\t\t| %-85s|\n","VENCIMENTO DA MENSALIDADE");
-				printf("\t\t| %-85s|\n","[REGRA] Seguir conforme calendário 14/05/2026, somente números.");
+				printf("\t\t| %-85s|\n","[REGRA] Seguir conforme calendário DDMMAAAA, somente números.");
+				printf("\t\t| %-85s|\n","[EXEMPLO] 14052026");
 				printf("\t\t| %-84s |","Digite a data do vencimento: [        ]");
 		    for(i=0; i < 56;i++)
 			    {
@@ -296,7 +297,8 @@ main ()
                     printf("\t\t| %-85s|\n","[REGRA] Dia: 1-31 | Mês: 1-12 | Ano: >= 2026.");
 					printf("\t\t| %85s|\n", " ");
 					printf("\t\t| %-85s|\n","VENCIMENTO DA MENSALIDADE");
-					printf("\t\t| %-85s|\n","[REGRA] Seguir conforme calendário 14/05/2026, somente números.");
+					printf("\t\t| %-85s|\n","[REGRA] Seguir conforme calendário DDMMAAAA, somente números.");
+					printf("\t\t| %-85s|\n","[EXEMPLO] 14052026");
 					printf("\t\t| %-84s |","Digite a data do vencimento: [        ]");
 		       		  for(i=0; i < 56;i++)
 			          {
@@ -305,10 +307,101 @@ main ()
 		            scanf("%2d%2d%4d", &dia[TLA],&mes[TLA],&ano[TLA]);	
 					
 				}
+			 // <---------------------------- ESCOLHA DE MODALIDADE (ALUNOS): -------------------------------------->
 			 
-		     // <-------------------------------- ENTRADA VALOR DA MENSALIDADE: -------------------------------------->
-		        printf("\t\t| %85s|\n", " ");
+			 if(TLM>=1) // <-- Verifica se existe modalidade cadastrada antes de exibir
+			 {
+			 
+			 	printf("\t\t| %85s|\n", " ");
+			 	printf("\t\t%s%s\n",linha01,linha01);
+			 	printf("\t\t| %-85s|\n","PAINEL DE MODALIDADES");
+			 	printf("\t\t%s%s\n",linha01,linha01);
+			 		for(i=0;i<TLM;i++) // exibi todas as modalidades disponíveis
+			 		{
+	    	 			printf("\t\t| %-12s : %-60s   %7s|\n","Modalidade  ",vModalidade[i], " ");
+               			printf("\t\t| %-12s : %2.2d   %65s|\n","Código  ",VcodMod[i], " ");
+                		printf("\t\t| %-12s : R$%6.2f %61s|\n","Valor  ",vValorAula[i], " "); 
+			 			printf("\t\t%s%s\n",linha01,linha01);
+					}
+				 printf("\t\t|%86s|\n", " ");
+                 printf("\t\t| %-85s|\n","SUAS MODALIDADES");
+                 printf("\t\t| [REGRA] Escolha no máximo %2.2d modalidade(s). %40s |\n",TLM, " ");
+			     printf("\t\t| %-85s|\n", "[REGRA] A quantidade desejada deve conter no máximo 2 dígitos.");
+			     printf("\t\t| %-85s|\n","[EXEMPLO] Digite 11 para escolher 11 modalidades.");
+	             printf("\t\t| %-84s |","[  ] Quantas quer praticar hoje?");
+	          		 for(i = 0;i < 85;i++)
+	                 {
+	                  printf("\b");
+	                 }	
+	                 
+	             scanf("%d", &temp);
+				 		
+	             // <-------------------- Fazer validação de min 01 max 99 (Temp não pode ser > TLM) [AQUI]:
+	             while(temp>TLM)
+	             {
+	             	printf("\t\t%s%s\n",linha01,linha01);
+	             	printf("\t\t| %-85s|\n","[!] Limite excedido, tente novamente.");
+	             	printf("\t\t| %-85s|\n", "[REGRA] A quantidade desejada não pode ser superior ao total de modalidades.");
+	             	printf("\t\t| [REGRA] Escolha no máximo %2.2d modalidade(s). %40s |\n",TLM, " ");
+	             	printf("\t\t| %-85s|\n","[EXEMPLO] Digite 11 para escolher 11 modalidades.");
+	                printf("\t\t| %-84s |","[  ] Quantas quer praticar hoje?");
+	          		 for(i = 0;i < 85;i++)
+	                 {
+	                  printf("\b");
+	                 }	
+	                 
+	             scanf("%d", &temp);
+	             	
+	             }
+	             
+	             // <----------------------- ESCOLHA DE MODALIDADE (RECEBENDO CÓDIGOS): -------------------------------------->
+				     
+	                 printf("\t\t|%86s|\n", " ");
+            		 printf("\t\t| %-85s|\n","CÓDIGO DA MODALIDADE");
+            		 printf("\t\t| %-85s|\n", "[REGRA] O código deve conter no máximo 2 dígitos.");
+	                 
+	                 for(i=0;i < temp; i++)
+	                 {
+	                
+	                    printf("\t\t| %-84s |","Digite o código da modalidade: [  ]");
+	           				for(i = 0;i < 54;i++)
+	                		{
+	                  		  printf("\b");
+	                 		}	
+	                   scanf("%d", &cod_mod);
+	                   
+	                   pos=0;
+	                   while(pos<TLM && cod_mod != VcodMod[pos])
+	                   pos++;
+	                   
+	                   if(pos<TLM)
+					   {
+					    vValorAluno = vValorAluno + vValorAula[pos];
+					   
+					   }
+					   else
+					   {
+					   	// printf erro
+					   	
+					   	
+					   }
+	                 	
+	                 }
+	                 printf("\t\t%s%s\n",linha01,linha01);
+		     }
+		     else // <-- Se não existir:
+		     {
+		     	printf("\t\t| %85s|\n", " ");
+		     	printf("\t\t%s%s\n",linha01,linha01);
+		     	printf("\t\t| %-85s|\n","[!] Nenhuma modalidade disponível no momento.");
+		     	printf("\t\t| %-85s|\n","[!] Por enquanto, aproveite nossos descontos nos planos.");
+		     	printf("\t\t%s%s\n",linha01,linha01);
+		     }
+			 
+		     // <-------------------------------- ENTRADA VALOR DA MENSALIDADE: ------------------------------------->
+	
 		        printf("\t\t| %-85s|\n","PAINEL DE OFERTAS");
+		        printf("\t\t%s%s\n",linha01,linha01);
 		        printf("\t\t| %-85s|\n","[1] Plano Gold - Anual - de R$800,00 por R$500,00");
 		        printf("\t\t| %-85s|\n","[2] Plano Prata - Trimestral - de R$240,00 por R$199,90");
 		        printf("\t\t| %-85s|\n","[3] Plano Bronze - Mensal - por R$80,00");
@@ -634,34 +727,60 @@ main ()
 		printf("\t\t|\t\t\t\t %-53s |\n","MÓDULO DE EXCLUSÃO");                                                
     	printf("\t\t%s%s\n" ,linha01,linha01);  
     	printf("\t\t| %-84s |\n","Selecione uma das operações disponíveis:");
-    	printf("\t\t|%86s|\n", " ");
-    	printf("\t\t| %-84s |\n","[1] Exclusão de Instrutores");                 
-	    printf("\t\t| %-84s |\n","[2] Exclusão de Alunos");                  
-	    printf("\t\t| %-84s |\n","[3] Exclusão de Modalidades");    
-		printf("\t\t| %-84s |\n","[4] Exclusão de Lançamentos");      
-	    printf("\t\t| %-84s |\n","[5] Retornar ao Menu Principal");
+    	printf("\t\t|%86s|\n", " ");                 
+	    printf("\t\t| %-84s |\n","[1] Exclusão de Alunos");                      
+		printf("\t\t| %-84s |\n","[2] Exclusão de Lançamentos");      
+	    printf("\t\t| %-84s |\n","[3] Retornar ao Menu Principal");
 	    printf("\t\t|%86s|\n", " ");
 	    printf("\t\t| %-85s|","Digite a opção desejada: [ ]");
 	    printf("%s%s%s",linha02,linha02,linha02);
 	    scanf("%d", &sub_op);
 		
-		while(sub_op >=1 && sub_op <=4)
+		while(sub_op >=1 && sub_op <=2)
 		{
 		switch(sub_op) // SUB MENU [2] <-- MÓDULO DE EXCLUSÃO:
 		{
-		    case 1:
-		  	
-		  	
-		  	
-		  	break;
 			
-			case 2:
+			case 1:
 		 // <-------------------------------- EXCLUSÃO DE ALUNOS [COMEÇO]: ------------------------------------------->
+		 
+		     // Zera contador verificador de data:
+		     excluir=0;
 		 
 		  	 printf("\t\t%s%s\n",linha01,linha01);	
 	         printf("\t\t|\t\t\t\t%-53s  |\n","EXCLUSÃO DE ALUNOS");
 	         printf("\t\t%s%s\n",linha01,linha01);
 	         
+	    // <--------------------------------- ENTRADA DATA ATUAL: ------------------------------------>
+				printf("\t\t| %85s|\n", " ");
+				printf("\t\t| %-85s|\n","DATA ATUAL DO SISTEMA");
+				printf("\t\t| %-85s|\n","[REGRA] Seguir conforme calendário DDMMAAAA, somente números.");
+				printf("\t\t| %-85s|\n","[EXEMPLO] 17052026");
+				printf("\t\t| %-84s |","Digite a data atual: [        ]");
+		          for(i=0; i < 64;i++)
+			      {
+				     printf("\b");
+			      }
+		       scanf("%2d%2d%4d", &dia_temp, &mes_temp, &ano_temp);
+					
+		     // <----------------------------- VALIDAÇÃO DA DATA: ------------------------------->		
+				while(dia_temp <= 0 || dia_temp > 31 || mes_temp <= 0 || mes_temp > 12 || ano_temp < 2026)	
+				{
+					printf("\t\t| %85s|\n", " ");
+					printf("\t\t| %-85s|\n","[!] Data de vencimento inválida.");
+                    printf("\t\t| %-85s|\n","[REGRA] Dia: 1-31 | Mês: 1-12 | Ano: >= 2026.");
+					printf("\t\t| %85s|\n", " ");
+					printf("\t\t| %-85s|\n","DATA ATUAL DO SISTEMA");
+					printf("\t\t| %-85s|\n","[REGRA] Seguir conforme calendário DDMMAAAA, somente números.");
+					printf("\t\t| %-85s|\n","[EXEMPLO] 17052026");
+					printf("\t\t| %-84s |","Digite a data atual: [        ]");
+		       		  for(i=0; i < 64;i++)
+			          {
+				         printf("\b");
+			          }
+		            scanf("%2d%2d%4d", &dia_temp, &mes_temp, &ano_temp);	
+					
+				}
 	     // <---------------------------------------- PESQUISAR CPF: ----------------------------------------------->
 	          printf("\t\t|%86s|\n", " ");
 	          printf("\t\t| %-85s|\n", "PESQUISAR CADASTRO:");
@@ -695,8 +814,32 @@ main ()
 			    printf("\n");
 			    printf("\t\t%s%s\n",linha01,linha01);
 			    
+			    
+			    
+			   if(ano_temp == ano[pos])
+			   {  if(mes_temp == mes[pos])
+			     {   if(dia_temp > dia[pos]) // Pode Excluir
+			       {
+			    	excluir = 1;
+			       }
+			     }
+		       }
+		       
+		       if(ano_temp == ano[pos])
+			   {  if(mes_temp > mes[pos]) // Pode Excluir
+			     {   
+			      excluir = 1;
+			     }
+		       }
+		       
+			    if(ano_temp > ano[pos]) // Pode Excluir
+			    {
+			     excluir = 1;
+			    }
+			    
 			   // <-------------------------------------- VALIDAÇÃO DE EXCLUSÃO: ---------------------------------------->
-			   
+			  if(excluir == 1)
+			  {
 			     printf("\t\t| %-85s|\n", "[AVISO] Esta ação removerá permanentemente o cadastro do aluno.");
 			     printf("\t\t|%86s|\n", " ");
 			     printf("\t\t| %-85s|\n", "[CONFIRMAÇÃO] Por segurança, informe novamente o CPF do aluno.");
@@ -735,13 +878,20 @@ main ()
 	         	  printf("\t\t%s%s\n",linha01,linha01);
 			      
 			   } // Fechamento IF-02-EX (Verificação de segurança)
-			   
 			   else { // <-- Errou CPF NA VERIFICAÇÃO 
 			   	printf("\t\t%s%s\n",linha01,linha01);
 	         	printf("\t\t| %-85s|\n", "[!] Falha na confirmação de segurança. Exclusão cancelada.");
 	         	printf("\t\t%s%s\n",linha01,linha01);
 			   } 
 			   
+		     } // Fechamento do if de excluir
+			  else // Não pode excluir:
+			  {
+			 	
+				printf("\t\t| %-85s|\n", "[!] Exclusão não permitida.");
+				printf("\t\t| %-85s|\n", "[REGRA] O vencimento da mensalidade ainda não expirou.");
+				printf("\t\t%s%s\n",linha01,linha01);
+			  }
 	         } // Fechamento IF-01-EX
 	         else //OBS: se posição for igual a TLA <-- Não encontrou o valor.
 	         {
@@ -753,33 +903,26 @@ main ()
 		  	// <-------------------------------- EXCLUSÃO DE ALUNOS [FIM]: ------------------------------------------->
 		  	break;
 		  	
+		  	case 2:
+		  	
+		  	
+		  	break;
+		  	
 		  	case 3:
-		  	
-		  	
-		  	break;
-		  	
-		  	case 4:
-		  	
-		  	
+		  		// CASE DE SAÍDA (NÃO INSERIR CÓDIGO [AQUI]);
 		  	break;
 			
-			case 5:
-		  	// CASE DE SAÍDA (NÃO INSERIR CÓDIGO [AQUI]);
-		  	break;
-			
-		}
+		} // FECHAMENTO / SUB MENU [2] <-- MÓDULO DE EXCLUSÃO
 		
 		 // <------------------------------ REPETIÇÃO MÓDULO DE EXCLUSÃO [COMEÇO AQUI] ----------------------------------->  
 		 
 			printf("\t\t|\t\t\t\t %-53s |\n","MÓDULO DE EXCLUSÃO");                                                
     		printf("\t\t%s%s\n" ,linha01,linha01);  
     		printf("\t\t| %-84s |\n","Selecione uma das operações disponíveis:");
-    		printf("\t\t|%86s|\n", " ");
-    		printf("\t\t| %-84s |\n","[1] Exclusão de Instrutores");                 
-	   	    printf("\t\t| %-84s |\n","[2] Exclusão de Alunos");                  
-	   		printf("\t\t| %-84s |\n","[3] Exclusão de Modalidades");    
-			printf("\t\t| %-84s |\n","[4] Exclusão de Lançamentos");      
-	    	printf("\t\t| %-84s |\n","[5] Retornar ao Menu Principal");
+    		printf("\t\t|%86s|\n", " ");                 
+	   	    printf("\t\t| %-84s |\n","[1] Exclusão de Alunos");                     
+			printf("\t\t| %-84s |\n","[2] Exclusão de Lançamentos");      
+	    	printf("\t\t| %-84s |\n","[3] Retornar ao Menu Principal");
 	    	printf("\t\t|%86s|\n", " ");
 	    	printf("\t\t| %-85s|","Digite a opção desejada: [ ]");
 	    	printf("%s%s%s",linha02,linha02,linha02);
@@ -801,18 +944,6 @@ main ()
 		// Sessão finalizada - Sistema Offline.
          break;
 
-
-
-
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
     	
        } // fechamento do Switch-01
        
